@@ -2,35 +2,46 @@ import com.sun.org.apache.regexp.internal.RE;
 
 import java.util.Arrays;
 
-/**
- * Array based storage for Resumes
- */
-public class ArrayStorage {
+public class ArrayStorageSingleton {
 
-    Resume[] storage = new Resume[6];
+    int length=6;
+    int size=0;
+    int firstFreeIndex=0;
+    Resume[] storage = new Resume[length];
 
     void clear() {
-        for (int i=0; i<storage.length; i++) {
+        for (int i=0; i<firstFreeIndex; i++) {
             if (storage[i]!=null) {
                 storage[i]=null;
             }
         }
+        size=0;
+        firstFreeIndex=0;
     }
 
     void save(Resume r) throws IndexOutOfBoundsException{
-        int j=0;
-        while(j<storage.length && storage[j++]!=null);
-        if (j==storage.length && storage[j-1]!=null) {
-            throw new IndexOutOfBoundsException();
+        if (size < length) {
+            int j = 0;
+            while (j <= firstFreeIndex && storage[j++] != null) ;
+            storage[--j] = r;
+            size++;
+            if (j==firstFreeIndex);
+            {firstFreeIndex++;}
         }
-        else if(j<=storage.length){
-          storage[--j]=r;
+        else if (size==length) {
+            Resume[] copy=storage;
+            length=length+10;
+            storage=new Resume[length];
+            storage=Arrays.copyOf(copy,length);
+            storage[firstFreeIndex]=r;
+            firstFreeIndex++;
+            size++;
         }
     }
 
     Resume get(String uuid) {
         Resume r = new Resume();
-        for (int i=0; i<storage.length;i++) {
+        for (int i=0; i<firstFreeIndex;i++) {
             if (storage[i]!=null && storage[i].uuid.equals(uuid)) {
                 r=storage[i];
                 break;
@@ -41,9 +52,10 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int i=0; i<storage.length; i++) {
+        for (int i=0; i<firstFreeIndex; i++) {
             if (storage[i]!=null && storage[i].uuid.equals(uuid)) {
                 storage[i]=null;
+                size--;
             }
         }
     }
@@ -52,9 +64,9 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] resume = new Resume[10000];
+        Resume[] resume = new Resume[firstFreeIndex+1];
         int j=0;
-        for (int i=0; i<storage.length; i++) {
+        for (int i=0; i<firstFreeIndex; i++) {
             if (storage[i]!=null) {
                 resume[j++]=storage[i];
             }
@@ -66,30 +78,29 @@ public class ArrayStorage {
         return Arrays.copyOfRange(resume,0,--i);
     }
 
-    int size() {
-
-        return this.getAll().length;
-    }
+    int size() {return size;}
 
     void trim() {
-        for (int i=0; i<storage.length;) {
+
+        for (int i=0; i<firstFreeIndex;) {
             if (storage[i]!=null) {
                 i++;
             }
             else {
                 int j;
-                for (j=i; j<storage.length; j++) {
+                for (j=i; j<firstFreeIndex; j++) {
                     if (storage[j]!=null) {
                         break;
                     }
                 }
 
-                if (j<storage.length) {
+                if (j<firstFreeIndex) {
                     storage[i] = storage[j];
                     storage[j] = null;
                 }
                 i++;
             }
         }
+        firstFreeIndex=size;
     }
 }
