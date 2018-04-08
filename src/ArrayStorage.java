@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
-    Resume[] storage = new Resume[6];
+    Resume[] storage = new Resume[10000];
 
     void clear() {
         for (int i=0; i<storage.length; i++) {

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class ArrayStorageSingleton {
 
-    int length=6;
+    int length=10000;
     int size=0;
     int firstFreeIndex=0;
     Resume[] storage = new Resume[length];
