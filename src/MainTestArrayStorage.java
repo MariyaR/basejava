@@ -46,7 +46,7 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.delete(r3.uuid);
         printAll(true);
         System.out.println("\nafter trim\n");
-        ARRAY_STORAGE.trim();
+
         printAll(true);
     }
 

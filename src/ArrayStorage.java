@@ -4,34 +4,29 @@ import java.util.Arrays;
 
 public class ArrayStorage {
 
-    int length = 3;
+    static final int LENGTH = 3;
     int size = 0;
-    Resume[] storage = new Resume[length];
+    Resume[] storage = new Resume[LENGTH];
 
     void clear() {
-        storage = new Resume[length];
+        Arrays.fill(storage, null);
         size = 0;
     }
 
     void save(Resume r) {
-        if (size < length) {
-            int j = 0;
-            while (j <= size && storage[j++] != null) ;
-            storage[--j] = r;
+
+        if (size < LENGTH) {
+            storage[size] = r;
             size++;
-        } else if (size == length) {
-            Resume[] copy = storage;
-            length = length + 10;
-            storage = new Resume[length];
-            storage = Arrays.copyOf(copy, length);
-            storage[size++] = r;
+        } else if (size == LENGTH) {
+            System.out.println("The storage is full, please delete any entry ");
         }
     }
 
     Resume get(String uuid) {
         Resume r = new Resume();
         for (int i = 0; i < size; i++) {
-            if (storage[i] != null && storage[i].uuid.equals(uuid)) {
+            if (storage[i].uuid.equals(uuid)) {
                 r = storage[i];
                 break;
             }
@@ -41,15 +36,13 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int delta = 0;
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                storage[i] = null;
-                delta++;
+                storage[i] = storage[size - 1];
+                storage[size - 1] = null;
+                size--;
             }
         }
-        trim();
-        size = size - delta;
     }
 
     /**
@@ -63,24 +56,4 @@ public class ArrayStorage {
         return size;
     }
 
-    void trim() {
-        for (int i = 0; i < size - 1; ) {
-            if (storage[i] != null) {
-                i++;
-            } else {
-                int j;
-                for (j = i; j < size; j++) {
-                    if (storage[j] != null) {
-                        break;
-                    }
-                }
-
-                if (j < size) {
-                    storage[i] = storage[j];
-                    storage[j] = null;
-                }
-                i++;
-            }
-        }
-    }
 }
