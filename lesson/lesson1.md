@@ -80,9 +80,9 @@
 
 ![finish](https://user-images.githubusercontent.com/13649199/27245924-cab3618e-52f6-11e7-9655-4293149b4126.png)
 
-- Реализуйте класс `ArrayStorage` (вставте код в пустые методы класса): работа с `Resume` на основе массива (методы `clear, get, save, delete, getAll, size`)
+- Реализуйте класс `ArrayStorageVersion` (вставте код в пустые методы класса): работа с `Resume` на основе массива (методы `clear, get, save, delete, getAll, size`)
    - Не используйте в решении коллекции, реализацию на их основе мы добавим позднее
-   - Не меняйте синтаксис методов `ArrayStorage` и не меняйте класс `Resume`. Нужет только код внутри готовых методов `ArrayStorage`
+   - Не меняйте синтаксис методов `ArrayStorageVersion` и не меняйте класс `Resume`. Нужет только код внутри готовых методов `ArrayStorageVersion`
    - [Массивы](http://study-java.ru/uroki-java/massivy-v-java/)
    - [Java массивы](http://info.javarush.ru/javarush_articles/2015/12/10/Java-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D1%8B.html)
 - Протестируйте вашу реализацию, запустив `MainTestArrayStorage.main()`: в IDEA слева на полях зеленая стрелка.
@@ -93,7 +93,7 @@
   - <a href="http://jeeconf.com/archive/jeeconf-2013/materials/intellij-idea/">Эффективная работа с кодом в IntelliJ IDEA</a>
 
 ### Optional
-- Модифицировать класс `ArrayStorage`: хранить все резюме в начале storage (без дырок null), чтобы не перебирать каждый раз все 10000 элементов.
+- Модифицировать класс `ArrayStorageVersion`: хранить все резюме в начале storage (без дырок null), чтобы не перебирать каждый раз все 10000 элементов.
 ```
 Хранеие резюме в storage (от 0 до size-1 элементов null нет):
 
@@ -101,5 +101,5 @@ r1, r2, r3,..., rn, null, null,..., null
 <----  size ----->
 <----  storage.length (10000)---------->
 ```
-- Посмотреть на класс `Arrays`. Там есть полезные вещи, которые могут упростить код `ArrayStorage`.
+- Посмотреть на класс `Arrays`. Там есть полезные вещи, которые могут упростить код `ArrayStorageVersion`.
 - Протестируйте реализацию, запустив MainArray.main(): в IDEA слева на полях зеленая стрелка.

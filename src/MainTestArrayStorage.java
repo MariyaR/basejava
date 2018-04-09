@@ -1,8 +1,8 @@
 /**
- * Test for com.urise.webapp.storage.ArrayStorage
+ * Test for com.urise.webapp.storage.ArrayStorageVersion
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final ArrayStorageVersion ARRAY_STORAGE = new ArrayStorageVersion();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
