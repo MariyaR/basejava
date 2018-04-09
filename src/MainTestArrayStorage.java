@@ -2,7 +2,7 @@
  * Test for com.urise.webapp.storage.ArrayStorageVersion
  */
 public class MainTestArrayStorage {
-    static final ArrayStorageVersion ARRAY_STORAGE = new ArrayStorageVersion();
+    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();

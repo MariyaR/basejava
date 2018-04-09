@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class ArrayStorage {
 
-    int length = 10000;
+    int length = 3;
     int size = 0;
     Resume[] storage = new Resume[length];
 
@@ -41,14 +41,15 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        int end = size;
-        for (int i = 0; i < end; i++) {
+        int delta = 0;
+        for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
                 storage[i] = null;
-                size--;
+                delta++;
             }
         }
         trim();
+        size = size - delta;
     }
 
     /**
@@ -63,18 +64,18 @@ public class ArrayStorage {
     }
 
     void trim() {
-        for (int i = 0; i < size + 1; ) {
+        for (int i = 0; i < size - 1; ) {
             if (storage[i] != null) {
                 i++;
             } else {
                 int j;
-                for (j = i; j < size + 1; j++) {
+                for (j = i; j < size; j++) {
                     if (storage[j] != null) {
                         break;
                     }
                 }
 
-                if (j < size + 1) {
+                if (j < size) {
                     storage[i] = storage[j];
                     storage[j] = null;
                 }
