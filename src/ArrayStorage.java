@@ -1,9 +1,6 @@
 
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import java.util.Arrays;
-import java.util.Objects;
 
 public class ArrayStorage {
 
@@ -40,32 +37,32 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int i=find(uuid);
-        if (i>=0) {
+        int i = find(uuid);
+        if (i >= 0) {
             return storage[i];
         } else {
-            System.out.println("There is no resume with id: "+uuid);
+            System.out.println("There is no resume with id: " + uuid);
             return null;
         }
     }
 
     public void delete(String uuid) {
-        int i=find(uuid);
-        if (i>=0){
+        int i = find(uuid);
+        if (i >= 0) {
             size--;
             storage[i] = storage[size];
             storage[size] = null;
-        }else {
-            System.out.println("There is no resume with id: "+uuid);
+        } else {
+            System.out.println("There is no resume with id: " + uuid);
         }
     }
 
-    public void update (Resume r) {
-        int i=find(r.uuid);
-        if (i>=0) {
-            storage[i]=r;
+    public void update(Resume r) {
+        int i = find(r.uuid);
+        if (i >= 0) {
+            storage[i] = r;
         } else {
-            System.out.println("There is no resume with id: "+r.uuid);
+            System.out.println("There is no resume with id: " + r.uuid);
         }
     }
 
