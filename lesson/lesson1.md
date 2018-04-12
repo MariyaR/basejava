@@ -85,8 +85,8 @@
    - Не меняйте синтаксис методов `ArrayStorageVersion` и не меняйте класс `Resume`. Нужет только код внутри готовых методов `ArrayStorageVersion`
    - [Массивы](http://study-java.ru/uroki-java/massivy-v-java/)
    - [Java массивы](http://info.javarush.ru/javarush_articles/2015/12/10/Java-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D1%8B.html)
-- Протестируйте вашу реализацию, запустив `MainTestArrayStorage.main()`: в IDEA слева на полях зеленая стрелка.
-- Протестируйте вашу реализацию интерактивно с помощью `MainArray.main()`.
+- Протестируйте вашу реализацию, запустив `com.urise.webapp.MainTestArrayStorage.main()`: в IDEA слева на полях зеленая стрелка.
+- Протестируйте вашу реализацию интерактивно с помощью `com.urise.webapp.MainArray.main()`.
 - Дополнительные материалы по IntelliJ IDEA
   - <a href="https://github.com/JavaOPs/topjava/wiki/IDEA">Idea Wiki</a> (поставить кодировку UTF-8, поменять фонт по умолчанию на DejaVu)
   - <a href="http://learn.javajoy.net/debug-intellij-idea">Отладчик IntelliJ IDEA</a>
@@ -102,4 +102,4 @@ r1, r2, r3,..., rn, null, null,..., null
 <----  storage.length (10000)---------->
 ```
 - Посмотреть на класс `Arrays`. Там есть полезные вещи, которые могут упростить код `ArrayStorageVersion`.
-- Протестируйте реализацию, запустив MainArray.main(): в IDEA слева на полях зеленая стрелка.
+- Протестируйте реализацию, запустив com.urise.webapp.MainArray.main(): в IDEA слева на полях зеленая стрелка.
