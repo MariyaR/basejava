@@ -1,6 +1,5 @@
 package com.urise.webapp.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 /**
