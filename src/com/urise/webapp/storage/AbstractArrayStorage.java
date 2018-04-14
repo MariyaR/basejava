@@ -21,6 +21,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             compress(index);
             size--;
+            storage[size] = null;
         } else {
             System.out.println("There is no resume with id: " + uuid);
         }
