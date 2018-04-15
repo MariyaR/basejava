@@ -17,10 +17,6 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     @Override
     public int compareTo(Resume o) {
         int uuidNumber = Integer.parseInt(uuid.substring(4));
