@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * com.urise.webapp.model.Resume class
@@ -8,6 +9,10 @@ import java.util.Objects;
 public class Resume implements Comparable<Resume> {
 
     private String uuid;
+
+    public Resume() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 
     public Resume(String uuid) {
         this.uuid = uuid;

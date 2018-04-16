@@ -1,6 +1,8 @@
-out
+.idea
 *.iml
+out
 log
+lib
 lesson
 
 
