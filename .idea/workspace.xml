@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4b328f41-0b58-40be-9ee1-76c2af194b3b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/urise/webapp/storage/ArrayStorageTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/com/urise/webapp/storage/SortedArrayStorageTest.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/MainArray.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/MainString.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/MainTestArrayStorage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/model/Resume.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/storage/AbstractArrayStorage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/storage/ArrayStorage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/storage/SortedArrayStorage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/storage/Storage.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/ru/javawebinar/basejava/storage/ArrayStorageTest.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/MainReflection.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/MainReflection.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/exception/ExistStorageException.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/exception/ExistStorageException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/exception/NotExistStorageException.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/exception/NotExistStorageException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/ru/javawebinar/basejava/exception/StorageException.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/exception/StorageException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/test/ru/javawebinar/basejava/storage/AbstractArrayStorageTest.java" afterPath="$PROJECT_DIR$/test/com/urise/webapp/storage/AbstractArrayStorageTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/urise/webapp/model/Resume.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/model/Resume.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/urise/webapp/storage/AbstractArrayStorage.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/storage/AbstractArrayStorage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/urise/webapp/storage/ArrayStorage.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/storage/ArrayStorage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/urise/webapp/storage/Storage.java" afterPath="$PROJECT_DIR$/src/com/urise/webapp/storage/Storage.java" />
-    </list>
+    <list default="true" id="4b328f41-0b58-40be-9ee1-76c2af194b3b" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -177,7 +155,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds" extendedState="5">
     <option name="x" value="75" />
     <option name="y" value="24" />
     <option name="width" value="1293" />
@@ -535,7 +513,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="75" y="24" width="1293" height="744" extended-state="4" />
+    <frame x="75" y="24" width="1293" height="744" extended-state="5" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
