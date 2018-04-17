@@ -10,8 +10,6 @@ public interface Storage {
 
     Resume get(String uuid);
 
-    int getStorageLimit();
-
     Resume[] getAll();
 
     void save(Resume r);
