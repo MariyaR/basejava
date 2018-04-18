@@ -14,13 +14,15 @@ public class SortedArrayStorageTest extends AbstractArrayStorageTest {
     @Test
     public void delete() throws Exception {
         storage.delete(UUID_1);
-        Resume[] expectedArray = {resume2, resume3};
+        Resume[] expectedArray = {RESUME_2, RESUME_3};
         Assert.assertArrayEquals(expectedArray, storage.getAll());
     }
 
     @Test
     public void save() throws Exception {
-        Resume[] expectedArray = {resume1, resume2, resume3, resume4, resume5};
+        Resume[] expectedArray = {RESUME_1, RESUME_2, RESUME_3, RESUME_4, RESUME_5};
+        storage.save(RESUME_5);
+        storage.save(RESUME_4);
         Assert.assertArrayEquals(expectedArray, storage.getAll());
     }
 
@@ -29,6 +31,6 @@ public class SortedArrayStorageTest extends AbstractArrayStorageTest {
         for (int i = 3; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             storage.save(new Resume("uuid" + (i + 1)));
         }
-        storage.save(resumeDummy);
+        storage.save(RESUME_DUMMY);
     }
 }
