@@ -3,9 +3,6 @@ package com.urise.webapp.model;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * com.urise.webapp.model.Resume class
- */
 public class Resume implements Comparable<Resume> {
 
     private String uuid;
@@ -24,11 +21,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public int compareTo(Resume o) {
-        int uuidNumber = Integer.parseInt(uuid.substring(4));
-        int oNumber = Integer.parseInt(o.uuid.substring(4));
-
-        return uuidNumber - oNumber;
-        //return uuid.compareTo(o.uuid);
+        return uuid.compareTo(o.uuid);
     }
 
     @Override
