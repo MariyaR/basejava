@@ -12,12 +12,11 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
 
     @Test
     public void testSaveOrder() throws Exception {
-        storage.save(resume5);
-        storage.save(resume4);
-        Resume[] expectedArray = {resume1, resume2,
-                resume3, resume5, resume4};
+        storage.save(RESUME_5);
+        storage.save(RESUME_4);
+        Resume[] expectedArray = {RESUME_1, RESUME_2,
+                RESUME_3, RESUME_5, RESUME_4};
         Assert.assertArrayEquals(expectedArray, storage.getAll());
         testSize();
     }
-
 }
