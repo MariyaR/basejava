@@ -22,7 +22,13 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume get(String uuid) {
-        return storage.get(uuid);
+
+        Resume r= storage.get(uuid);
+
+        if (r!=null) {
+            return r;
+        }
+        else throw exception;
     }
 
     @Override
@@ -42,6 +48,21 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public void update(Resume r) {
+
+    }
+
+    @Override
+    boolean isNotExist(String uuid) {
+        return false;
+    }
+
+    @Override
+    void doDelete(String uuid) {
+
+    }
+
+    @Override
+    void doGet(String uuid) {
 
     }
 }
