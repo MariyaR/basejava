@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MapStorage extends AbstractStorage {
+public class MapStorage extends AbstractStorage <Resume> {
 
     protected Map<String, Resume> storage = new HashMap<>();
 
@@ -16,29 +16,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    public void delete(String uuid) {
-        storage.remove(uuid);
-    }
-
-    @Override
-    public Resume get(String uuid) {
-
-        Resume r= storage.get(uuid);
-
-        if (r!=null) {
-            return r;
-        }
-        else throw exception;
-    }
-
-    @Override
     public Resume[] getAll() {
         return  storage.values().toArray(new Resume[storage.size()]);
-    }
-
-    @Override
-    public void save(Resume r) {
-        storage.put(UUID.randomUUID().toString(),r);
     }
 
     @Override
@@ -46,23 +25,39 @@ public class MapStorage extends AbstractStorage {
         return storage.size();
     }
 
+
     @Override
-    public void update(Resume r) {
+    protected void doDelete(Resume foundResult) {
 
     }
 
     @Override
-    boolean isNotExist(String uuid) {
-        return false;
+    protected Resume doGet(Resume foundResult) {
+        return null;
     }
 
     @Override
-    void doDelete(String uuid) {
+    protected void doSave(Resume resume) {
 
     }
 
     @Override
-    void doGet(String uuid) {
+    protected void doUpdate(Resume resume) {
 
+    }
+
+    @Override
+    protected boolean isExist(Resume foundResult) {
+        return (foundResult!=null);
+    }
+
+    @Override
+    protected boolean isNotExist(Resume foundResult) {
+        return (foundResult==null);
+    }
+
+    @Override
+    protected Resume findResumeById(String uuid) {
+        return storage.get(uuid);
     }
 }

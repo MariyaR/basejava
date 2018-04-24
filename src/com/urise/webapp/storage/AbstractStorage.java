@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
@@ -7,40 +8,53 @@ public abstract class AbstractStorage <T> implements Storage {
 
     @Override
     public void delete(String uuid) {
-        if (isNotExist(uuid)) {
+        T foundResult = findResumeById(uuid);
+        if (isNotExist(foundResult)) {
             throw new NotExistStorageException(uuid);
         }
-        doDelete(uuid);
+        doDelete(foundResult);
     }
 
     @Override
     public Resume get(String uuid) {
-        T findResult = findResume(uuid);
-        if (isNotExist(findResult)) {
+        T foundResult = findResumeById(uuid);
+        if (isNotExist(foundResult)) {
             throw new NotExistStorageException(uuid);
         }
-        return doGet(findResult);
+        return doGet(foundResult);
     }
 
     @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    public void save(Resume resume) {
+        T foundResult = findResumeById(resume.getUuid());
+        if (isExist(foundResult)) {
+            throw new ExistStorageException(resume.getUuid());
+        }
+        doSave(resume);
     }
 
     @Override
-    public void save(Resume r) {
-
+    public void update(Resume resume) {
+        T foundResult = findResumeById(resume.getUuid());
+        if (isNotExist(foundResult)) {
+            throw new NotExistStorageException(resume.getUuid());
+        }
+        doUpdate(resume);
     }
 
-    @Override
-    public void update(Resume r) {
+    protected abstract void doDelete(T foundResult);
 
-    }
+    protected abstract Resume doGet(T foundResult);
 
-    abstract boolean isNotExist(T result);
-    abstract void doDelete(String uuid);
-    abstract Resume doGet(T findResult);
-    abstract T findResume(String uuid);
+    protected abstract void doSave(Resume resume);
+
+    protected abstract void doUpdate(Resume resume);
+
+    protected abstract boolean isExist(T foundResult);
+
+    protected abstract boolean isNotExist(T foundResult);
+
+    protected abstract T findResumeById(String uuid);
 
 }
 

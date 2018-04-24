@@ -1,15 +1,11 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage <Integer>{
 
     protected ArrayList<Resume> storage = new ArrayList<>();
-
 
 
     @Override
@@ -17,21 +13,6 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    @Override
-    public void delete(String uuid) {
-        storage.removeIf(resume->resume.getUuid().equals(uuid));
-        storage.trimToSize();
-    }
-
-    @Override
-    public Resume get(String uuid) {
-
-        int index= storage.indexOf(uuid);
-        if (index<0) {throw exception}
-        else return storage.get(index);
-
-        return storage.get(storage.indexOf(new Resume(uuid)));
-    }
 
     @Override
     public Resume[] getAll() {
@@ -39,32 +20,51 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void save(Resume r) {
-        storage.add(r);
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
 
+
     @Override
-    public void update(Resume r) {
+    protected void doDelete(Integer foundResult) {
+        storage.remove(foundResult);
+        storage.trimToSize();
+    }
+
+    @Override
+    protected Resume doGet(Integer foundResult) {
+        return storage.get(foundResult);
+    }
+
+
+    @Override
+    protected void doSave(Resume resume) {
+        storage.add(resume);
+    }
+
+    @Override
+    protected void doUpdate(Resume resume) {
 
     }
 
     @Override
-    boolean isNotExist(String uuid) {
-        return false;
+    protected boolean isExist(Integer foundResult) {
+        return (foundResult >= 0);
     }
 
     @Override
-    void doDelete(String uuid) {
-
+    protected boolean isNotExist(Integer foundResult) {
+        return (foundResult < 0);
     }
 
     @Override
-    void doGet(String uuid) {
-
+    protected Integer findResumeById(String uuid) {
+        for (int i=0; i< storage.size(); i++) {
+            if (storage.get(i).equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
+
 }
