@@ -4,20 +4,19 @@ import com.urise.webapp.model.Resume;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
-public class MapStorage extends AbstractStorage <Resume> {
+public class MapStorage extends AbstractStorage<String> {
 
-    protected Map<String, Resume> storage = new HashMap<>();
+    protected HashMap<String, Resume> storage = new HashMap<>();
 
     @Override
     public void clear() {
-    storage.clear();
+        storage.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return  storage.values().toArray(new Resume[storage.size()]);
+        return storage.values().toArray(new Resume[storage.size()]);
     }
 
     @Override
@@ -27,37 +26,41 @@ public class MapStorage extends AbstractStorage <Resume> {
 
 
     @Override
-    protected void doDelete(Resume foundResult) {
-
+    protected void doDelete(String key) {
+        storage.remove(key);
     }
 
     @Override
-    protected Resume doGet(Resume foundResult) {
-        return null;
+    protected Resume doGet(String key) {
+        return storage.get(key);
     }
 
     @Override
     protected void doSave(Resume resume) {
-
+        storage.put(resume.getUuid(),resume);
     }
 
     @Override
-    protected void doUpdate(Resume resume) {
-
+    protected void doUpdate(String key, Resume resume) {
+        storage.put(key, resume);
     }
 
     @Override
-    protected boolean isExist(Resume foundResult) {
-        return (foundResult!=null);
+    protected boolean isExist(String key) {
+        return (key != null);
     }
 
     @Override
-    protected boolean isNotExist(Resume foundResult) {
-        return (foundResult==null);
+    protected boolean isNotExist(String key) {
+        return (key == null);
     }
 
     @Override
-    protected Resume findResumeById(String uuid) {
-        return storage.get(uuid);
+    protected String findResumeById(String uuid) {
+        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
+            if (entry.getValue().getUuid().equals(uuid))
+                return entry.getKey();
+        }
+        return null;
     }
 }

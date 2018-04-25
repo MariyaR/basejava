@@ -1,9 +1,10 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
+
 import java.util.ArrayList;
 
-public class ListStorage extends AbstractStorage <Integer>{
+public class ListStorage extends AbstractStorage<Integer> {
 
     protected ArrayList<Resume> storage = new ArrayList<>();
 
@@ -26,14 +27,14 @@ public class ListStorage extends AbstractStorage <Integer>{
 
 
     @Override
-    protected void doDelete(Integer foundResult) {
-        storage.remove(foundResult);
+    protected void doDelete(Integer index) {
+        storage.remove(index);
         storage.trimToSize();
     }
 
     @Override
-    protected Resume doGet(Integer foundResult) {
-        return storage.get(foundResult);
+    protected Resume doGet(Integer index) {
+        return storage.get(index);
     }
 
 
@@ -43,24 +44,25 @@ public class ListStorage extends AbstractStorage <Integer>{
     }
 
     @Override
-    protected void doUpdate(Resume resume) {
-
+    protected void doUpdate(Integer index, Resume resume) {
+        storage.remove(index);
+        storage.add(resume);
     }
 
     @Override
-    protected boolean isExist(Integer foundResult) {
-        return (foundResult >= 0);
+    protected boolean isExist(Integer index) {
+        return (index >= 0);
     }
 
     @Override
-    protected boolean isNotExist(Integer foundResult) {
-        return (foundResult < 0);
+    protected boolean isNotExist(Integer index) {
+        return (index < 0);
     }
 
     @Override
     protected Integer findResumeById(String uuid) {
-        for (int i=0; i< storage.size(); i++) {
-            if (storage.get(i).equals(uuid)) {
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }

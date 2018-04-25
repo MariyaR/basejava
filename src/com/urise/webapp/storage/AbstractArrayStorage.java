@@ -7,8 +7,7 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage extends
-        AbstractStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage <Integer>{
 
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -19,28 +18,73 @@ public abstract class AbstractArrayStorage extends
         size = 0;
     }
 
-    public void delete(String uuid) {
-        int index = find(uuid);
-        if (index >= 0) {
-            compress(index);
-            size--;
-            storage[size] = null;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
-    public Resume get(String uuid) {
-        int index = find(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
-    }
-
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
+
+    public int size() {
+        return size;
+    }
+
+    @Override
+    protected void doDelete(Integer index) {
+        compress(index);
+        size--;
+        storage[size] = null;
+    }
+
+    @Override
+    protected Resume doGet(Integer index) {
+        return storage[index];
+    }
+
+    @Override
+    protected void doSave(Resume resume) {
+        if (size < STORAGE_LIMIT) {
+            insert(resume, index);
+            size++;
+        } else {
+            throw new StorageException("The storage is full", resume.getUuid());
+        }
+    }
+
+    @Override
+    protected void doUpdate(Integer index, Resume resume) {
+        storage[index] = resume;
+    }
+
+    @Override
+    protected boolean isExist(Integer index) {
+        return false;
+    }
+
+    @Override
+    protected boolean isNotExist(Integer index) {
+        return (index < 0);
+    }
+
+    @Override
+    protected abstract Integer findResumeById(String uuid);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void save(Resume resume) {
         int index = find(resume.getUuid());
@@ -51,19 +95,6 @@ public abstract class AbstractArrayStorage extends
             size++;
         } else {
             throw new StorageException("The storage is full", resume.getUuid());
-        }
-    }
-
-    public int size() {
-        return size;
-    }
-
-    public void update(Resume resume) {
-        int index = find(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
