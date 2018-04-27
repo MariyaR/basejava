@@ -26,11 +26,11 @@ public abstract class AbstractStorage<StringOrInteger> implements Storage {
 
     @Override
     public void save(Resume resume) {
-        StringOrInteger foundResult = findResumeById(resume.getUuid());
-        if (isExist(foundResult)) {
+        StringOrInteger keyOrIndex = findResumeById(resume.getUuid());
+        if (isExist(keyOrIndex)) {
             throw new ExistStorageException(resume.getUuid());
         }
-        doSave(resume);
+        doSave(resume, keyOrIndex);
     }
 
     @Override
@@ -46,7 +46,7 @@ public abstract class AbstractStorage<StringOrInteger> implements Storage {
 
     protected abstract Resume doGet(StringOrInteger keyOrIndex);
 
-    protected abstract void doSave(Resume resume);
+    protected abstract void doSave(Resume resume, StringOrInteger keyOrIndex);
 
     protected abstract void doUpdate(StringOrInteger keyOrIndex, Resume resume);
 

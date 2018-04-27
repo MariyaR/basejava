@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage <Integer>{
     }
 
     @Override
-    protected void doSave(Resume resume) {
+    protected void doSave(Resume resume, Integer index) {
         if (size < STORAGE_LIMIT) {
             insert(resume, index);
             size++;
@@ -66,43 +66,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage <Integer>{
     @Override
     protected abstract Integer findResumeById(String uuid);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void save(Resume resume) {
-        int index = find(resume.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        } else if (size < STORAGE_LIMIT) {
-            insert(resume, index);
-            size++;
-        } else {
-            throw new StorageException("The storage is full", resume.getUuid());
-        }
-    }
-
     protected abstract void compress(int vacancy);
 
     protected abstract void insert(Resume resume, int index);
-
-    protected abstract int find(String uuid);
-
 
 }
