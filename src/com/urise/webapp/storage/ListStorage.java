@@ -28,7 +28,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void doDelete(Integer index) {
-        storage.remove(index);
+        storage.remove((int) index);
         storage.trimToSize();
     }
 
@@ -45,18 +45,13 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void doUpdate(Integer index, Resume resume) {
-        storage.remove(index);
+        storage.remove((int) index);
         storage.add(resume);
     }
 
     @Override
     protected boolean isExist(Integer index) {
         return (index >= 0);
-    }
-
-    @Override
-    protected boolean isNotExist(Integer index) {
-        return (index < 0);
     }
 
     @Override

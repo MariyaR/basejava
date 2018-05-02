@@ -4,29 +4,23 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
-public abstract class AbstractStorage<StringOrInteger> implements Storage {
+public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     @Override
     public void delete(String uuid) {
-        StringOrInteger keyOrIndex = findResumeById(uuid);
-        if (isNotExist(keyOrIndex)) {
-            throw new NotExistStorageException(uuid);
-        }
+        KeyOrIndex keyOrIndex = findResumeIfExist(uuid);
         doDelete(keyOrIndex);
     }
 
     @Override
     public Resume get(String uuid) {
-        StringOrInteger keyOrIndex = findResumeById(uuid);
-        if (isNotExist(keyOrIndex)) {
-            throw new NotExistStorageException(uuid);
-        }
+        KeyOrIndex keyOrIndex = findResumeIfExist(uuid);
         return doGet(keyOrIndex);
     }
 
     @Override
     public void save(Resume resume) {
-        StringOrInteger keyOrIndex = findResumeById(resume.getUuid());
+        KeyOrIndex keyOrIndex = findResumeById(resume.getUuid());
         if (isExist(keyOrIndex)) {
             throw new ExistStorageException(resume.getUuid());
         }
@@ -35,26 +29,29 @@ public abstract class AbstractStorage<StringOrInteger> implements Storage {
 
     @Override
     public void update(Resume resume) {
-        StringOrInteger keyOrIndex = findResumeById(resume.getUuid());
-        if (isNotExist(keyOrIndex)) {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+        KeyOrIndex keyOrIndex = findResumeIfExist(resume.getUuid());
         doUpdate(keyOrIndex, resume);
     }
 
-    protected abstract void doDelete(StringOrInteger keyOrIndex);
+    private KeyOrIndex findResumeIfExist(String uuid) {
+        KeyOrIndex keyOrIndex = findResumeById(uuid);
+        if (!isExist(keyOrIndex)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return keyOrIndex;
+    }
 
-    protected abstract Resume doGet(StringOrInteger keyOrIndex);
+    protected abstract void doDelete(KeyOrIndex keyOrIndex);
 
-    protected abstract void doSave(Resume resume, StringOrInteger keyOrIndex);
+    protected abstract Resume doGet(KeyOrIndex keyOrIndex);
 
-    protected abstract void doUpdate(StringOrInteger keyOrIndex, Resume resume);
+    protected abstract void doSave(Resume resume, KeyOrIndex keyOrIndex);
 
-    protected abstract boolean isExist(StringOrInteger keyOrIndex);
+    protected abstract void doUpdate(KeyOrIndex keyOrIndex, Resume resume);
 
-    protected abstract boolean isNotExist(StringOrInteger keyOrIndex);
+    protected abstract boolean isExist(KeyOrIndex keyOrIndex);
 
-    protected abstract StringOrInteger findResumeById(String uuid);
+    protected abstract KeyOrIndex findResumeById(String uuid);
 
 }
 

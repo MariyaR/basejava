@@ -37,7 +37,7 @@ public class MapStorage extends AbstractStorage<String> {
 
     @Override
     protected void doSave(Resume resume, String key) {
-        storage.put(resume.getUuid(),resume);
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
@@ -51,15 +51,9 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean isNotExist(String key) {
-        return (key == null);
-    }
-
-    @Override
     protected String findResumeById(String uuid) {
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            if (entry.getValue().getUuid().equals(uuid))
-                return entry.getKey();
+        if (storage.containsKey(uuid)) {
+            return uuid;
         }
         return null;
     }

@@ -17,6 +17,5 @@ public class ArrayStorageTest extends AbstractArrayStorageTest {
         Resume[] expectedArray = {RESUME_1, RESUME_2,
                 RESUME_3, RESUME_5, RESUME_4};
         Assert.assertArrayEquals(expectedArray, storage.getAll());
-        testSize();
     }
 }
