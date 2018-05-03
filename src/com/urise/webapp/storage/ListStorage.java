@@ -3,10 +3,11 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage<Integer> {
 
-    protected ArrayList<Resume> storage = new ArrayList<>();
+    protected List<Resume> storage = new ArrayList<>();
 
 
     @Override
@@ -29,7 +30,6 @@ public class ListStorage extends AbstractStorage<Integer> {
     @Override
     protected void doDelete(Integer index) {
         storage.remove((int) index);
-        storage.trimToSize();
     }
 
     @Override

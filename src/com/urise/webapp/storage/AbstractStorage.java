@@ -20,10 +20,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     @Override
     public void save(Resume resume) {
-        KeyOrIndex keyOrIndex = findResumeById(resume.getUuid());
-        if (isExist(keyOrIndex)) {
-            throw new ExistStorageException(resume.getUuid());
-        }
+        KeyOrIndex keyOrIndex = findPlaceToSave(resume.getUuid());
         doSave(resume, keyOrIndex);
     }
 
@@ -37,6 +34,14 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
         KeyOrIndex keyOrIndex = findResumeById(uuid);
         if (!isExist(keyOrIndex)) {
             throw new NotExistStorageException(uuid);
+        }
+        return keyOrIndex;
+    }
+
+    private KeyOrIndex findPlaceToSave(String uuid) {
+        KeyOrIndex keyOrIndex = findResumeById(uuid);
+        if (isExist(keyOrIndex)) {
+            throw new ExistStorageException(uuid);
         }
         return keyOrIndex;
     }
