@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapStorage extends AbstractStorage<String> {
@@ -15,15 +16,9 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[storage.size()]);
+    public void copyStorage(List<Resume> sortedList) {
+        sortedList.addAll(storage.values());
     }
-
-    @Override
-    public int size() {
-        return storage.size();
-    }
-
 
     @Override
     protected void doDelete(String key) {
@@ -56,5 +51,10 @@ public class MapStorage extends AbstractStorage<String> {
             return uuid;
         }
         return null;
+    }
+
+    @Override
+    public int size() {
+        return storage.size();
     }
 }
