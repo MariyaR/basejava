@@ -5,6 +5,7 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     @Override
     public void copyStorage(List<Resume> sortedList) {
-        Collections.addAll(sortedList, storage);
+        for (int i = 0; i < size; i++) {
+            sortedList.add(storage[i]);
+        }
     }
 
     @Override

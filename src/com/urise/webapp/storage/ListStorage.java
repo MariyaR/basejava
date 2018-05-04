@@ -37,8 +37,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected void doUpdate(Integer index, Resume resume) {
-        storage.remove((int) index);
-        storage.add(resume);
+        storage.set(index, resume);
     }
 
     @Override
