@@ -7,11 +7,11 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage extends AbstractStorage <Integer>{
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     protected static final int STORAGE_LIMIT = 10000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int size=0;
+    protected int size = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -55,12 +55,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage <Integer>{
 
     @Override
     protected boolean isExist(Integer index) {
-        return false;
-    }
-
-    @Override
-    protected boolean isNotExist(Integer index) {
-        return (index < 0);
+        return (index >= 0);
     }
 
     @Override

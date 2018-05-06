@@ -15,7 +15,6 @@ public class SortedArrayStorageTest extends AbstractArrayStorageTest {
         storage.delete(UUID_1);
         Resume[] expectedArray = {RESUME_2, RESUME_3};
         Assert.assertArrayEquals(expectedArray, storage.getAll());
-        testSize();
     }
 
     @Test
@@ -24,6 +23,5 @@ public class SortedArrayStorageTest extends AbstractArrayStorageTest {
         storage.save(RESUME_5);
         storage.save(RESUME_4);
         Assert.assertArrayEquals(expectedArray, storage.getAll());
-        testSize();
     }
 }

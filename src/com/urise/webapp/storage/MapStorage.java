@@ -51,11 +51,6 @@ public class MapStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean isNotExist(String key) {
-        return (key == null);
-    }
-
-    @Override
     protected String findResumeById(String uuid) {
         for (Map.Entry<String, Resume> entry : storage.entrySet()) {
             if (entry.getValue().getUuid().equals(uuid))
