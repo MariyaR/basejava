@@ -5,7 +5,10 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
@@ -16,14 +19,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
-
-    public int size() {
-        return size;
     }
 
     @Override
@@ -54,12 +49,22 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected boolean isExist(Integer index) {
-        return (index >= 0);
+    public List<Resume> getStorage() {
+        return Arrays.asList(Arrays.copyOfRange(storage,0,size));
     }
 
     @Override
-    protected abstract Integer findResumeById(String uuid);
+    protected boolean isExist(Integer index) {
+        return index >= 0;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    protected abstract Integer findResumeByKey(String key);
 
     protected abstract void compress(int vacancy);
 
