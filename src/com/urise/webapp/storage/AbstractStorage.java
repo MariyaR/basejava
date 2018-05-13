@@ -9,49 +9,50 @@ import java.util.List;
 
 public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
+
     @Override
-    public void delete(String searchKey) {
-        KeyOrIndex keyOrIndex = findResumeIfExist(searchKey);
+    public void delete(String uuid) {
+        KeyOrIndex keyOrIndex = findResumeIfExist(uuid);
         doDelete(keyOrIndex);
     }
 
     @Override
-    public Resume get(String searchKey) {
-        KeyOrIndex keyOrIndex = findResumeIfExist(searchKey);
+    public Resume get(String uuid) {
+        KeyOrIndex keyOrIndex = findResumeIfExist(uuid);
         return doGet(keyOrIndex);
     }
 
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> sortedList = getStorage();
-        sortedList.sort(Comparator.comparing(Resume::getFullName));
+        sortedList.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
         return sortedList;
     }
 
     @Override
     public void save(Resume resume) {
-        KeyOrIndex keyOrIndex = findPlaceToSave(resume.getFullName());
+        KeyOrIndex keyOrIndex = findPlaceToSave(resume.getUuid());
         doSave(resume, keyOrIndex);
     }
 
     @Override
     public void update(Resume resume) {
-        KeyOrIndex keyOrIndex = findResumeIfExist(resume.getFullName());
+        KeyOrIndex keyOrIndex = findResumeIfExist(resume.getUuid());
         doUpdate(keyOrIndex, resume);
     }
 
-    private KeyOrIndex findResumeIfExist(String searchKey) {
-        KeyOrIndex keyOrIndex = findResumeByKey(searchKey);
+    private KeyOrIndex findResumeIfExist(String uuid) {
+        KeyOrIndex keyOrIndex = findResumeByKey(uuid);
         if (!isExist(keyOrIndex)) {
-            throw new NotExistStorageException(searchKey);
+            throw new NotExistStorageException(uuid);
         }
         return keyOrIndex;
     }
 
-    private KeyOrIndex findPlaceToSave(String searchKey) {
-        KeyOrIndex keyOrIndex = findResumeByKey(searchKey);
+    private KeyOrIndex findPlaceToSave(String uuid) {
+        KeyOrIndex keyOrIndex = findResumeByKey(uuid);
         if (isExist(keyOrIndex)) {
-            throw new ExistStorageException(searchKey);
+            throw new ExistStorageException(uuid);
         }
         return keyOrIndex;
     }
@@ -68,7 +69,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     protected abstract boolean isExist(KeyOrIndex keyOrIndex);
 
-    protected abstract KeyOrIndex findResumeByKey(String key);
+    protected abstract KeyOrIndex findResumeByKey(String uuid);
 
 }
 

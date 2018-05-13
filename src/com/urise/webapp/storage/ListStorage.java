@@ -46,9 +46,9 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Integer findResumeByKey(String key) {
+    protected Integer findResumeByKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
-            if (storage.get(i).getFullName().equals(key)) {
+            if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }

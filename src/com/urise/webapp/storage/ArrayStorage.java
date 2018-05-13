@@ -17,7 +17,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected Integer findResumeByKey(String key) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getFullName().equals(key)) {
+            if (storage[i].getUuid().equals(key)) {
                 return i;
             }
         }
