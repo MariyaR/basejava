@@ -15,12 +15,10 @@ public class Sections {
     @Override
     public String toString(){
         StringBuffer st = new StringBuffer();
-        st.append(Section.Personal.getContent()).append("\n");
+        st.append(Section.Personal.toString()).append("\n");
         st.append(sections.get(Section.Personal));
 
 
         return st.toString();
     }
-
-    private void 
 }

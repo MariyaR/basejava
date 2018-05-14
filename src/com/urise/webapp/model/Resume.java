@@ -11,6 +11,8 @@ public class Resume implements Comparable<Resume> {
 
     private Contacts contacts;
 
+    private Sections sections;
+
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
     }
@@ -63,6 +65,8 @@ public class Resume implements Comparable<Resume> {
         return "Resume{" +
                 "uuid='" + uuid + '\'' +
                 ", fullName='" + fullName + '\'' +
-                '}';
+                '}' + "\n"
+                + contacts.toString() + "\n"
+                + sections.toString();
     }
 }

@@ -2,7 +2,7 @@ package com.urise.webapp.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+//used for education and working experience
 public class ListOfDateAndText extends SectionBasic {
 
     List<DateAndText> list = new ArrayList<>();
