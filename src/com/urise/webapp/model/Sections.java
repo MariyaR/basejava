@@ -3,6 +3,7 @@ package com.urise.webapp.model;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Sections {
 
@@ -23,10 +24,13 @@ public class Sections {
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        st.append(Section.Personal.toString()).append("\n");
-        st.append(sections.get(Section.Personal));
-
-
+        Stream.of(Section.values()).forEach(i -> appendIfExist(st, i));
         return st.toString();
+    }
+
+    private void appendIfExist(StringBuffer st, Section s) {
+        if (sections.containsKey(s)) {
+            st.append(sections.get(s));
+        }
     }
 }

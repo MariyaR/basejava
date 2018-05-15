@@ -20,7 +20,7 @@ public class PlainText extends SectionBasic {
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        st.append(this.getSection().toString()).append("\n");
+        st.append(this.getSection().toString()).append(": ");
         st.append(Field).append("\n");
         return st.toString();
     }

@@ -19,8 +19,9 @@ public class ListOfStrings extends SectionBasic {
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        st.append(this.getSection().toString()).append("\n");
-        list.forEach(i -> st.append(i).append("\n"));
+        st.append(this.getSection().toString()).append(": ");
+        list.forEach(i -> st.append(i).append(", "));
+        st.append("\n");
         return st.toString();
     }
 

@@ -51,7 +51,7 @@ public class DateAndText {
     public String toString() {
         StringBuffer st = new StringBuffer();
         st.append(titel).append("\n");
-        st.append(startDate).append("-").append(endDate).append("\n");
+        st.append(startDate).append(" - ").append(endDate).append(", ");
         st.append(field).append("\n");
         return st.toString();
     }

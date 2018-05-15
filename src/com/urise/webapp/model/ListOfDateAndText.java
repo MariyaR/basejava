@@ -18,6 +18,7 @@ public class ListOfDateAndText extends SectionBasic {
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
+        st.append(this.getSection().toString()).append(":\n");
         list.forEach(st::append);
         return st.toString();
     }
