@@ -69,4 +69,20 @@ public class Resume implements Comparable<Resume> {
                 + contacts.toString() + "\n"
                 + sections.toString();
     }
+
+    public Contacts getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Contacts contacts) {
+        this.contacts = contacts;
+    }
+
+    public Sections getSections() {
+        return sections;
+    }
+
+    public void setSections(Sections sections) {
+        this.sections = sections;
+    }
 }

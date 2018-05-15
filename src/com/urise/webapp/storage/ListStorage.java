@@ -24,7 +24,6 @@ public class ListStorage extends AbstractStorage<Integer> {
         return storage.get(index);
     }
 
-
     @Override
     protected void doSave(Resume resume, Integer index) {
         storage.add(resume);

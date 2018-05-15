@@ -8,10 +8,22 @@ public class Contacts {
 
     Map<Contact, String> contacts = new HashMap<>();
 
+    public void addContact(Contact c, String s) {
+        contacts.put(c, s);
+    }
+
+    public void removeContact(Contact c) {
+        contacts.remove(c);
+    }
+
+    public String getContact(Contact c) {
+        return contacts.get(c);
+    }
+
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        Stream.of(Contact.values()).forEach(i->appendIfExist(st,i));
+        Stream.of(Contact.values()).forEach(i -> appendIfExist(st, i));
 //        st.append("Mobile phone: ").append(contacts.get(Contact.PhoneNumber)).append("\n");
 //        st.append("Skype: ").append(contacts.get(Contact.Skype)).append("\n");
 //        st.append("Mail: ").append(contacts.get(Contact.Mail)).append("\n");
@@ -22,8 +34,8 @@ public class Contacts {
         return st.toString();
     }
 
-    private void appendIfExist (StringBuffer st, Contact c) {
-        if(contacts.containsKey(c)) {
+    private void appendIfExist(StringBuffer st, Contact c) {
+        if (contacts.containsKey(c)) {
             st.append(c.toString()).append(contacts.get(c)).append("\n");
         }
     }
