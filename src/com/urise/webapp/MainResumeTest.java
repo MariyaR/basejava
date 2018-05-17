@@ -34,11 +34,7 @@ public class MainResumeTest {
         workingExperience.addRecord(work3);
 
         Sections sections = new Sections();
-        sections.addSection(personal);
-        sections.addSection(currentPosition);
-        sections.addSection(skills);
-        sections.addSection(workingExperience);
-
+        sections.addSection(personal).addSection(currentPosition).addSection(skills).addSection(workingExperience);
         resume.setSections(sections);
 
         System.out.println(resume);

@@ -9,8 +9,13 @@ public class Sections {
 
     private Map<Section, SectionBasic> sections = new HashMap<>();
 
-    public void addSection(SectionBasic sectionBasic) {
+    public Sections addSection(SectionBasic sectionBasic) {
         sections.put(sectionBasic.getSection(), sectionBasic);
+        return this;
+    }
+
+    public Section updateSection(SectionBasic sectionBasic) {
+
     }
 
     public void removeSection(Section section) {

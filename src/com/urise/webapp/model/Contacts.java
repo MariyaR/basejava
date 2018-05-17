@@ -6,10 +6,11 @@ import java.util.stream.Stream;
 
 public class Contacts {
 
-    Map<Contact, String> contacts = new HashMap<>();
+    private Map<Contact, String> contacts = new HashMap<>();
 
-    public void addContact(Contact c, String s) {
+    public Contacts addContact(Contact c, String s) {
         contacts.put(c, s);
+        return this;
     }
 
     public void removeContact(Contact c) {
