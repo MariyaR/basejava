@@ -1,6 +1,6 @@
 package com.urise.webapp.model;
 
-public enum Section {
+public enum SectionName {
     Personal("Personal information"),
     CurrentPosition("Current position"),
     Achievements("Achievements"),
@@ -10,7 +10,7 @@ public enum Section {
 
     private String content;
 
-    Section(String content) {
+    SectionName(String content) {
         this.content = content;
     }
 

@@ -1,43 +1,50 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.exception.ModelException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
 public class Contacts {
 
-    private Map<Contact, String> contacts = new HashMap<>();
+    private Map<ContactName, String> contacts = new HashMap<>();
 
-    public Contacts addContact(Contact c, String s) {
+    public Contacts addContact(ContactName c, String s) {
         contacts.put(c, s);
         return this;
     }
 
-    public void removeContact(Contact c) {
+    public void removeContact(ContactName c) {
+        checkKey(c);
         contacts.remove(c);
     }
 
-    public String getContact(Contact c) {
+    public String getContact(ContactName c) {
+        checkKey(c);
         return contacts.get(c);
     }
 
+    public void updateContact (ContactName c, String s) {
+        checkKey(c);
+        contacts.put(c, s);
+    }
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        Stream.of(Contact.values()).forEach(i -> appendIfExist(st, i));
-//        st.append("Mobile phone: ").append(contacts.get(Contact.PhoneNumber)).append("\n");
-//        st.append("Skype: ").append(contacts.get(Contact.Skype)).append("\n");
-//        st.append("Mail: ").append(contacts.get(Contact.Mail)).append("\n");
-//        st.append("LinkedIn: ").append(contacts.get(Contact.LinkedIn)).append("\n");
-//        st.append("GitHub: ").append(contacts.get(Contact.GitHub)).append("\n");
-//        st.append("StackOverflow: ").append(contacts.get(Contact.Stackoverflow)).append("\n");
-//        st.append("Home page: ").append(contacts.get(Contact.HomePage)).append("\n");
+        Stream.of(ContactName.values()).forEach(i -> appendIfExist(st, i));
         return st.toString();
     }
 
-    private void appendIfExist(StringBuffer st, Contact c) {
+    private void appendIfExist(StringBuffer st, ContactName c) {
         if (contacts.containsKey(c)) {
             st.append(c.toString()).append(contacts.get(c)).append("\n");
+        }
+    }
+
+    private void checkKey(ContactName c) {
+        if (!contacts.containsKey(c)) {
+            throw new ModelException("no such contact in this resume");
         }
     }
 }

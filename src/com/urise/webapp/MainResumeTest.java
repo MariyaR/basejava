@@ -8,18 +8,18 @@ public class MainResumeTest {
 
         Resume resume = new Resume("Ivan Petrov");
         Contacts contacts = new Contacts();
-        contacts.addContact(Contact.Mail, "IvanPetrov@google.com");
-        contacts.addContact(Contact.Skype, "IvanPetrov");
-        contacts.addContact(Contact.PhoneNumber, "123456789");
+        contacts.addContact(ContactName.Mail, "IvanPetrov@google.com");
+        contacts.addContact(ContactName.Skype, "IvanPetrov");
+        contacts.addContact(ContactName.PhoneNumber, "123456789");
         resume.setContacts(contacts);
 
-        PlainText personal = new PlainText(Section.Personal);
+        PlainText personal = new PlainText(SectionName.Personal);
         personal.setField("Architecture purist");
 
-        PlainText currentPosition = new PlainText(Section.CurrentPosition);
+        PlainText currentPosition = new PlainText(SectionName.CurrentPosition);
         currentPosition.setField("architector");
 
-        ListOfStrings skills = new ListOfStrings(Section.Skills);
+        ListOfStrings skills = new ListOfStrings(SectionName.Skills);
         skills.addRecord("java");
         skills.addRecord("c++");
         skills.addRecord("hadoop");
@@ -28,7 +28,7 @@ public class MainResumeTest {
         DateAndText work2 = new DateAndText("employer2", "01-01-2005", "01-01-2010", "some responsibilities");
         DateAndText work3 = new DateAndText("employer3", "01-01-2010", "01-01-2015", "some responsibilities");
 
-        ListOfDateAndText workingExperience = new ListOfDateAndText(Section.Experience);
+        ListOfDateAndText workingExperience = new ListOfDateAndText(SectionName.Experience);
         workingExperience.addRecord(work1);
         workingExperience.addRecord(work2);
         workingExperience.addRecord(work3);

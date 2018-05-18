@@ -3,18 +3,15 @@ package com.urise.webapp.model;
 //used for Personal information and Current position
 public class PlainText extends SectionBasic {
 
-    private String Field;
+    private final String Field;
 
-    public PlainText(Section section) {
+    public PlainText(SectionName section, String field) {
         super(section);
+        this.Field = field;
     }
 
     public String getField() {
         return Field;
-    }
-
-    public void setField(String field) {
-        Field = field;
     }
 
     @Override

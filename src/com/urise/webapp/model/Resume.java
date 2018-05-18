@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Resume implements Comparable<Resume> {
 
-    private String uuid;
+    private final String uuid;
 
     private String fullName;
 
@@ -18,6 +18,8 @@ public class Resume implements Comparable<Resume> {
     }
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(fullName, "fullName can not be null");
+        Objects.requireNonNull(uuid, "uuid can not be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }

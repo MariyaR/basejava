@@ -8,7 +8,7 @@ public class ListOfStrings extends SectionBasic {
 
     private List<String> list = new ArrayList<>();
 
-    public ListOfStrings(Section section) {
+    public ListOfStrings(SectionName section) {
         super(section);
     }
 

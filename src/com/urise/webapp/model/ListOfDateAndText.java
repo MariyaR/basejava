@@ -5,9 +5,9 @@ import java.util.List;
 //used for education and working experience
 public class ListOfDateAndText extends SectionBasic {
 
-    List<DateAndText> list = new ArrayList<>();
+    private List<DateAndText> list = new ArrayList<>();
 
-    public ListOfDateAndText(Section section) {
+    public ListOfDateAndText(SectionName section) {
         super(section);
     }
 

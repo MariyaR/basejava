@@ -1,6 +1,6 @@
 package com.urise.webapp.model;
 
-public enum Contact {
+public enum ContactName {
     PhoneNumber("Phone number: "),
     Skype("Skype: "),
     Mail("Mail: "),
@@ -11,7 +11,7 @@ public enum Contact {
 
     private String content;
 
-    Contact(String s) {
+    ContactName(String s) {
         this.content = s;
     }
 

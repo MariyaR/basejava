@@ -2,17 +2,13 @@ package com.urise.webapp.model;
 
 public class SectionBasic {
 
-    private Section section;
+    private final SectionName section;
 
-    public SectionBasic(Section section) {
+    public SectionBasic(SectionName section) {
         this.section = section;
     }
 
-    public Section getSection() {
+    public SectionName getSection() {
         return section;
-    }
-
-    public void setSection(Section section) {
-        this.section = section;
     }
 }

@@ -1,41 +1,58 @@
 package com.urise.webapp.model;
 
+import com.urise.webapp.exception.ModelException;
+
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
 public class Sections {
 
-    private Map<Section, SectionBasic> sections = new HashMap<>();
+    private Map<SectionName, SectionBasic> sections = new HashMap<>();
 
     public Sections addSection(SectionBasic sectionBasic) {
         sections.put(sectionBasic.getSection(), sectionBasic);
         return this;
     }
 
-    public Section updateSection(SectionBasic sectionBasic) {
-
+    public Sections updateSection(SectionBasic sectionBasic) {
+        checkKeyIfExist(sectionBasic.getSection());
+        sections.put(sectionBasic.getSection(), sectionBasic);
+        return this;
     }
 
-    public void removeSection(Section section) {
-        sections.remove(section);
+    public void removeSection(SectionName sectionName) {
+        checkKeyIfExist(sectionName);
+        sections.remove(sectionName);
     }
 
-    public String getSection(Section section) {
-        return sections.get(section).toString();
+    public SectionBasic getSection(SectionName sectionName) {
+        checkKeyIfExist(sectionName);
+        return sections.get(sectionName);
     }
 
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        Stream.of(Section.values()).forEach(i -> appendIfExist(st, i));
+        Stream.of(SectionName.values()).forEach(i -> appendIfExist(st, i));
         return st.toString();
     }
 
-    private void appendIfExist(StringBuffer st, Section s) {
+    private void appendIfExist(StringBuffer st, SectionName s) {
         if (sections.containsKey(s)) {
             st.append(sections.get(s));
+        }
+    }
+
+    private void checkKeyIfExist(SectionName section) {
+        if (!sections.containsKey(section)) {
+            throw new ModelException("this resume does not contain the required section");
+        }
+    }
+
+    private void checkKeyIfNotExist (SectionName sectionName) {
+        if (sections.containsKey(sectionName)) {
+            throw new ModelException("this resume already contains the required section");
         }
     }
 }

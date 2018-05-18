@@ -1,15 +1,15 @@
 package com.urise.webapp.model;
 
-//used for education and working exprience
+//used for education and working experience
 public class DateAndText {
 
-    private String startDate;
-    private String endDate;
-    private String field;
-    private String titel;
+    private final String startDate;
+    private final String endDate;
+    private final String field;
+    private final String title;
 
-    public DateAndText(String titel, String startDate, String endDate, String field) {
-        this.titel = titel;
+    public DateAndText(String title, String startDate, String endDate, String field) {
+        this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.field = field;
@@ -19,38 +19,22 @@ public class DateAndText {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
     public String getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
     }
 
     public String getField() {
         return field;
     }
 
-    public void setField(String field) {
-        this.field = field;
-    }
-
-    public String getTitel() {
-        return titel;
-    }
-
-    public void setTitel(String titel) {
-        this.titel = titel;
+    public String getTitle() {
+        return title;
     }
 
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        st.append(titel).append("\n");
+        st.append(title).append("\n");
         st.append(startDate).append(" - ").append(endDate).append(", ");
         st.append(field).append("\n");
         return st.toString();
