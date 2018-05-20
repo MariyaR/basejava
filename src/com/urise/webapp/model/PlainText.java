@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 //used for Personal information and Current position
 public class PlainText extends SectionBasic {
 
@@ -7,6 +9,7 @@ public class PlainText extends SectionBasic {
 
     public PlainText(SectionName section, String field) {
         super(section);
+        Objects.requireNonNull(field,"field can not be null");
         this.Field = field;
     }
 
@@ -15,10 +18,21 @@ public class PlainText extends SectionBasic {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlainText plainText = (PlainText) o;
+        return Objects.equals(Field, plainText.Field);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Field);
+    }
+
+    @Override
     public String toString() {
-        StringBuffer st = new StringBuffer();
-        st.append(this.getSection().toString()).append(": ");
-        st.append(Field).append("\n");
-        return st.toString();
+        return this.getSection().toString() + ": " +
+                Field + "\n";
     }
 }

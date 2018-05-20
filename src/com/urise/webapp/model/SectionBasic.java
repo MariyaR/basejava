@@ -4,11 +4,11 @@ public class SectionBasic {
 
     private final SectionName section;
 
-    public SectionBasic(SectionName section) {
+    SectionBasic(SectionName section) {
         this.section = section;
     }
 
-    public SectionName getSection() {
+    SectionName getSection() {
         return section;
     }
 }
