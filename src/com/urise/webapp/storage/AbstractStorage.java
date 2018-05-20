@@ -42,7 +42,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
     }
 
     private KeyOrIndex findResumeIfExist(String uuid) {
-        KeyOrIndex keyOrIndex = findResumeByKey(uuid);
+        KeyOrIndex keyOrIndex = findKeyOrIndexBySearchKey(uuid);
         if (!isExist(keyOrIndex)) {
             throw new NotExistStorageException(uuid);
         }
@@ -50,7 +50,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
     }
 
     private KeyOrIndex findPlaceToSave(String uuid) {
-        KeyOrIndex keyOrIndex = findResumeByKey(uuid);
+        KeyOrIndex keyOrIndex = findKeyOrIndexBySearchKey(uuid);
         if (isExist(keyOrIndex)) {
             throw new ExistStorageException(uuid);
         }
@@ -69,7 +69,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     protected abstract boolean isExist(KeyOrIndex keyOrIndex);
 
-    protected abstract KeyOrIndex findResumeByKey(String uuid);
+    protected abstract KeyOrIndex findKeyOrIndexBySearchKey(String uuid);
 
 }
 

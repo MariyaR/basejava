@@ -64,7 +64,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected abstract Integer findResumeByKey(String key);
+    protected abstract Integer findKeyOrIndexBySearchKey(String key);
 
     protected abstract void compress(int vacancy);
 
