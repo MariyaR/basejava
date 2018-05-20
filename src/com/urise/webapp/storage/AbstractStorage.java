@@ -12,13 +12,13 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     @Override
     public void delete(String uuid) {
-        KeyOrIndex keyOrIndex = findResumeIfExist(uuid);
+        KeyOrIndex keyOrIndex = findKeyOrIndexIfExist(uuid);
         doDelete(keyOrIndex);
     }
 
     @Override
     public Resume get(String uuid) {
-        KeyOrIndex keyOrIndex = findResumeIfExist(uuid);
+        KeyOrIndex keyOrIndex = findKeyOrIndexIfExist(uuid);
         return doGet(keyOrIndex);
     }
 
@@ -37,12 +37,12 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     @Override
     public void update(Resume resume) {
-        KeyOrIndex keyOrIndex = findResumeIfExist(resume.getUuid());
+        KeyOrIndex keyOrIndex = findKeyOrIndexIfExist(resume.getUuid());
         doUpdate(keyOrIndex, resume);
     }
 
-    private KeyOrIndex findResumeIfExist(String uuid) {
-        KeyOrIndex keyOrIndex = findResumeByKey(uuid);
+    private KeyOrIndex findKeyOrIndexIfExist(String uuid) {
+        KeyOrIndex keyOrIndex = findKeyOrIndexBySearchKey(uuid);
         if (!isExist(keyOrIndex)) {
             throw new NotExistStorageException(uuid);
         }
@@ -50,7 +50,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
     }
 
     private KeyOrIndex findPlaceToSave(String uuid) {
-        KeyOrIndex keyOrIndex = findResumeByKey(uuid);
+        KeyOrIndex keyOrIndex = findKeyOrIndexBySearchKey(uuid);
         if (isExist(keyOrIndex)) {
             throw new ExistStorageException(uuid);
         }
@@ -69,7 +69,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
 
     protected abstract boolean isExist(KeyOrIndex keyOrIndex);
 
-    protected abstract KeyOrIndex findResumeByKey(String uuid);
+    protected abstract KeyOrIndex findKeyOrIndexBySearchKey(String uuid);
 
 }
 
