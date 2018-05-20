@@ -24,7 +24,7 @@ public class MapStorageResume extends AbstractStorage<Resume> {
 
     @Override
     protected Resume doGet(Resume resume) {
-        return storage.get(resume.getUuid());
+        return resume;
     }
 
     @Override
