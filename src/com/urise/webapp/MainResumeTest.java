@@ -2,22 +2,22 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
+import java.util.EnumMap;
+
 public class MainResumeTest {
 
     public static void main(String[] args) {
 
         Resume resume = new Resume("Ivan Petrov");
-        Contacts contacts = new Contacts();
-        contacts.addContact(ContactName.Mail, "IvanPetrov@google.com");
-        contacts.addContact(ContactName.Skype, "IvanPetrov");
-        contacts.addContact(ContactName.PhoneNumber, "123456789");
+        EnumMap <ContactName, String> contacts = new EnumMap<ContactName, String>(ContactName.class);
+        contacts.put(ContactName.Mail, "IvanPetrov@google.com");
+        contacts.put(ContactName.Skype, "IvanPetrov");
+        contacts.put(ContactName.PhoneNumber, "123456789");
         resume.setContacts(contacts);
 
-        PlainText personal = new PlainText(SectionName.Personal);
-        personal.setField("Architecture purist");
+        PlainText personal = new PlainText(SectionName.Personal, "Architecture purist");
 
-        PlainText currentPosition = new PlainText(SectionName.CurrentPosition);
-        currentPosition.setField("architector");
+        PlainText currentPosition = new PlainText(SectionName.CurrentPosition, "architector");
 
         ListOfStrings skills = new ListOfStrings(SectionName.Skills);
         skills.addRecord("java");
@@ -33,10 +33,12 @@ public class MainResumeTest {
         workingExperience.addRecord(work2);
         workingExperience.addRecord(work3);
 
-        Sections sections = new Sections();
-        sections.addSection(personal).addSection(currentPosition).addSection(skills).addSection(workingExperience);
+        EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
+        sections.put(personal.getSection(), personal);
+        sections.put(currentPosition.getSection(),currentPosition);
+        sections.put(skills.getSection(),skills);
+        sections.put(workingExperience.getSection(),workingExperience);
         resume.setSections(sections);
-
         System.out.println(resume);
     }
 }
