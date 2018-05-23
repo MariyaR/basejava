@@ -1,16 +1,17 @@
 package com.urise.webapp.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 //used for education and working experience
 public class DateAndText {
 
-    private final String startDate;
-    private final String endDate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
     private final String field;
     private final String title;
 
-    public DateAndText(String title, String startDate, String endDate, String field) {
+    public DateAndText(String title, LocalDate startDate, LocalDate endDate, String field) {
         Objects.requireNonNull(title, "Title can not be null");
         Objects.requireNonNull(startDate, "Start date can not be null");
         Objects.requireNonNull(endDate, "End date can not be null");
@@ -21,11 +22,11 @@ public class DateAndText {
         this.field = field;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 

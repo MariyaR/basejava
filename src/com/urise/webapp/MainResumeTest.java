@@ -2,6 +2,7 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.*;
 
+import java.time.LocalDate;
 import java.util.EnumMap;
 
 public class MainResumeTest {
@@ -24,9 +25,9 @@ public class MainResumeTest {
         skills.addRecord("c++");
         skills.addRecord("hadoop");
 
-        DateAndText work1 = new DateAndText("employer1", "01-01-2000", "01-01-2005", "some responsibilities");
-        DateAndText work2 = new DateAndText("employer2", "01-01-2005", "01-01-2010", "some responsibilities");
-        DateAndText work3 = new DateAndText("employer3", "01-01-2010", "01-01-2015", "some responsibilities");
+        DateAndText work1 = new DateAndText("employer1", LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
+        DateAndText work2 = new DateAndText("employer2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
+        DateAndText work3 = new DateAndText("employer3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
 
         ListOfDateAndText workingExperience = new ListOfDateAndText(SectionName.Experience);
         workingExperience.addRecord(work1);
