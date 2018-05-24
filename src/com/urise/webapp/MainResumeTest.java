@@ -16,11 +16,11 @@ public class MainResumeTest {
         contacts.put(ContactName.PhoneNumber, "123456789");
         resume.setContacts(contacts);
 
-        PlainText personal = new PlainText(SectionName.Personal, "Architecture purist");
+        PlainText personal = new PlainText( "Architecture purist");
 
-        PlainText currentPosition = new PlainText(SectionName.CurrentPosition, "architector");
+        PlainText currentPosition = new PlainText( "architector");
 
-        ListOfStrings skills = new ListOfStrings(SectionName.Skills);
+        ListOfStrings skills = new ListOfStrings();
         skills.addRecord("java");
         skills.addRecord("c++");
         skills.addRecord("hadoop");
@@ -29,16 +29,16 @@ public class MainResumeTest {
         DateAndText work2 = new DateAndText("employer2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
         DateAndText work3 = new DateAndText("employer3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
 
-        ListOfDateAndText workingExperience = new ListOfDateAndText(SectionName.Experience);
+        ListOfDateAndText workingExperience = new ListOfDateAndText();
         workingExperience.addRecord(work1);
         workingExperience.addRecord(work2);
         workingExperience.addRecord(work3);
 
         EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
-        sections.put(personal.getSection(), personal);
-        sections.put(currentPosition.getSection(),currentPosition);
-        sections.put(skills.getSection(),skills);
-        sections.put(workingExperience.getSection(),workingExperience);
+        sections.put(SectionName.Personal, personal);
+        sections.put(SectionName.CurrentPosition,currentPosition);
+        sections.put(SectionName.Skills,skills);
+        sections.put(SectionName.Experience,workingExperience);
         resume.setSections(sections);
         System.out.println(resume);
     }

@@ -9,10 +9,6 @@ public class ListOfDateAndText extends SectionBasic {
 
     private List<DateAndText> list = new ArrayList<>();
 
-    public ListOfDateAndText(SectionName section) {
-        super(section);
-    }
-
     public void addRecord(DateAndText dateAndText) {
         list.add(dateAndText);
     }
@@ -34,7 +30,6 @@ public class ListOfDateAndText extends SectionBasic {
 
     public String toString() {
         StringBuffer st = new StringBuffer();
-        st.append(this.getSection().toString()).append(":\n");
         list.forEach(st::append);
         return st.toString();
     }

@@ -94,6 +94,7 @@ public class Resume implements Comparable<Resume> {
 
     private void appendIfExist(StringBuffer st, SectionName s) {
         if (sections.containsKey(s)) {
+            st.append(s.toString());
             st.append(sections.get(s));
         }
     }

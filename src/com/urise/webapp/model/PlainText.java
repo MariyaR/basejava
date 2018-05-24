@@ -7,8 +7,7 @@ public class PlainText extends SectionBasic {
 
     private final String Field;
 
-    public PlainText(SectionName section, String field) {
-        super(section);
+    public PlainText( String field) {
         Objects.requireNonNull(field,"field can not be null");
         this.Field = field;
     }
@@ -32,7 +31,6 @@ public class PlainText extends SectionBasic {
 
     @Override
     public String toString() {
-        return this.getSection().toString() + ": " +
-                Field + "\n";
+        return Field + "\n";
     }
 }

@@ -9,10 +9,6 @@ public class ListOfStrings extends SectionBasic {
 
     private List<String> list = new ArrayList<>();
 
-    public ListOfStrings(SectionName section) {
-        super(section);
-    }
-
     public void addRecord(String record) {
         list.add(record);
     }
@@ -33,7 +29,6 @@ public class ListOfStrings extends SectionBasic {
     @Override
     public String toString() {
         StringBuffer st = new StringBuffer();
-        st.append(this.getSection().toString()).append(": ");
         list.forEach(i -> st.append(i).append(", "));
         st.append("\n");
 
