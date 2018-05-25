@@ -29,7 +29,7 @@ public class ListOfDateAndText extends SectionBasic {
     @Override
 
     public String toString() {
-        StringBuffer st = new StringBuffer();
+        StringBuilder st = new StringBuilder();
         list.forEach(st::append);
         return st.toString();
     }

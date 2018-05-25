@@ -76,7 +76,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        StringBuffer st = new StringBuffer();
+        StringBuilder st = new StringBuilder();
         st.append("Resume{").append("uuid='").append(uuid).append('\'').append(", fullName='").append(fullName)
                 .append('\'').append('}').append("\n");
         Stream.of(ContactName.values()).forEach(i -> appendIfExist(st, i));
@@ -85,14 +85,14 @@ public class Resume implements Comparable<Resume> {
         return st.toString();
     }
 
-    private void appendIfExist(StringBuffer st, ContactName c) {
+    private void appendIfExist(StringBuilder st, ContactName c) {
         if (contacts.containsKey(c)) {
 
             st.append(c.toString()).append(contacts.get(c)).append("\n");
         }
     }
 
-    private void appendIfExist(StringBuffer st, SectionName s) {
+    private void appendIfExist(StringBuilder st, SectionName s) {
         if (sections.containsKey(s)) {
             st.append(s.toString());
             st.append(sections.get(s));

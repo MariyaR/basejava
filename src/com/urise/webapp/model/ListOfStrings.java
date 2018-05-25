@@ -28,7 +28,7 @@ public class ListOfStrings extends SectionBasic {
 
     @Override
     public String toString() {
-        StringBuffer st = new StringBuffer();
+        StringBuilder st = new StringBuilder();
         list.forEach(i -> st.append(i).append(", "));
         st.append("\n");
 
