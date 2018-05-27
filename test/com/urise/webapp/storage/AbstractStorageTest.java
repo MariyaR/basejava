@@ -3,10 +3,13 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDate;
+import java.util.EnumMap;
 
 public abstract class AbstractStorageTest {
 
@@ -18,12 +21,49 @@ public abstract class AbstractStorageTest {
     protected static final String UUID_4 = "uuid4";
     protected static final String UUID_5 = "uuid5";
     protected static final String DUMMY = "uuid100500";
-    protected static final Resume RESUME_1 = new Resume(UUID_1, "Name");
-    protected static final Resume RESUME_2 = new Resume(UUID_2, "Name");
-    protected static final Resume RESUME_3 = new Resume(UUID_3, "Name");
-    protected static final Resume RESUME_4 = new Resume(UUID_4, "Name");
-    protected static final Resume RESUME_5 = new Resume(UUID_5, "Name");
+    protected static final Resume RESUME_1 = new Resume(UUID_1, "Aleksandrov Ivan");
+    protected static final Resume RESUME_2 = new Resume(UUID_2, "Ivanov Ivan");
+    protected static final Resume RESUME_3 = new Resume(UUID_3, "Petrov Ivan");
+    protected static final Resume RESUME_4 = new Resume(UUID_4, "Sokolov Aleksandr");
+    protected static final Resume RESUME_5 = new Resume(UUID_5, "Sokolov Ivan");
     protected static final Resume RESUME_DUMMY = new Resume(DUMMY);
+
+    {
+        EnumMap<ContactName, String> contacts = new EnumMap<ContactName, String>(ContactName.class);
+        contacts.put(ContactName.Mail, "IvanPetrov@google.com");
+        contacts.put(ContactName.Skype, "IvanPetrov");
+        contacts.put(ContactName.PhoneNumber, "123456789");
+        RESUME_3.setContacts(contacts);
+
+        PlainText personal = new PlainText("Architecture purist");
+
+        PlainText currentPosition = new PlainText("architector");
+
+        ListOfStrings skills = new ListOfStrings();
+        skills.addRecord("java");
+        skills.addRecord("c++");
+        skills.addRecord("hadoop");
+
+        DateAndText work1 = new DateAndText("employer1", LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
+        DateAndText work2 = new DateAndText("employer2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
+        DateAndText work3 = new DateAndText("employer3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
+        DateAndText work4 = new DateAndText("employer3", LocalDate.parse("2015-01-01"), LocalDate.parse("2017-01-01"), "some other responsibilities");
+
+        ListOfDateAndText workingExperience = new ListOfDateAndText();
+        workingExperience.addRecord(work4);
+        workingExperience.addRecord(work3);
+        workingExperience.addRecord(work2);
+        workingExperience.addRecord(work1);
+
+        EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
+        sections.put(SectionName.Personal, personal);
+        sections.put(SectionName.CurrentPosition, currentPosition);
+        sections.put(SectionName.Skills, skills);
+        sections.put(SectionName.Experience, workingExperience);
+        RESUME_2.setSections(sections);
+    }
+
+
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;

@@ -28,11 +28,13 @@ public class MainResumeTest {
         DateAndText work1 = new DateAndText("employer1", LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
         DateAndText work2 = new DateAndText("employer2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
         DateAndText work3 = new DateAndText("employer3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
+        DateAndText work4  = new DateAndText("employer3", LocalDate.parse("2015-01-01"), LocalDate.parse("2017-01-01"), "some other responsibilities");
 
         ListOfDateAndText workingExperience = new ListOfDateAndText();
-        workingExperience.addRecord(work1);
-        workingExperience.addRecord(work2);
+        workingExperience.addRecord(work4);
         workingExperience.addRecord(work3);
+        workingExperience.addRecord(work2);
+        workingExperience.addRecord(work1);
 
         EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
         sections.put(SectionName.Personal, personal);

@@ -60,4 +60,9 @@ public class DateAndText {
                 startDate + " - " + endDate + ", " +
                 field + "\n";
     }
+
+    public String toStringNoTitle() {
+        return startDate + " - " + endDate + ", " +
+                field + "\n";
+    }
 }

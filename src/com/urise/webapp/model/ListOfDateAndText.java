@@ -1,8 +1,6 @@
 package com.urise.webapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 //used for education and working experience
 public class ListOfDateAndText extends SectionBasic {
@@ -30,7 +28,19 @@ public class ListOfDateAndText extends SectionBasic {
 
     public String toString() {
         StringBuilder st = new StringBuilder();
-        list.forEach(st::append);
+        List<DateAndText> sortedList = new ArrayList<>(list);
+        sortedList.sort(Comparator.comparing(DateAndText::getStartDate).reversed());
+        ListIterator<DateAndText> it = sortedList.listIterator();
+        String title = "dummy";
+        while (it.hasNext()) {
+            DateAndText dat = it.next();
+            if (dat.getTitle().equals(title)) {
+                st.append(dat.toStringNoTitle());
+            } else {
+                st.append(dat.toString());
+                title = dat.getTitle();
+            }
+        }
         return st.toString();
     }
 }
