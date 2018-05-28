@@ -5,11 +5,13 @@ import com.urise.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private File directory;
+    protected int size = 0;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -24,27 +26,35 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-
+        List<File> fileList = Arrays.asList(directory.listFiles());
+        for (File file : fileList) {
+            file.delete();
+        }
+        size = 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
-    protected File getSearchKey(String uuid) {
+    protected File findKeyOrIndexBySearchKey(String uuid) {
         return new File(directory, uuid);
     }
 
     @Override
-    protected void doUpdate(Resume r, File file) {
-
+    protected void doUpdate(File file, Resume r) {
+        try {
+            doWrite(r, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected boolean isExist(File file) {
-        return file.exists();
+        return (file.exists() && file.getAbsolutePath().contains(directory.getAbsolutePath()));
     }
 
     @Override
@@ -53,24 +63,28 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             file.createNewFile();
             doWrite(r, file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("IO error", file.getName());
         }
-    }
-
-    protected abstract void doWrite(Resume r, File file) throws IOException;
-
-    @Override
-    protected Resume doGet(File file) {
-        return null;
+        size++;
     }
 
     @Override
     protected void doDelete(File file) {
-
+        file.delete();
+        size--;
     }
 
     @Override
-    protected List<Resume> doCopyAll() {
+    protected List<Resume> getStorage() {
         return null;
     }
+
+    @Override
+    protected Resume doGet(File file) {
+        return createResumeFromFile(file);
+    }
+
+    protected abstract Resume createResumeFromFile(File file);
+
+    protected abstract void doWrite(Resume r, File file) throws IOException;
 }
