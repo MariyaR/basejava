@@ -11,7 +11,6 @@ import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private File directory;
-    protected int size = 0;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -29,15 +28,17 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         File[] fileArray = directory.listFiles();
         if (fileArray != null) {
             for (File file : fileArray) {
-                file.delete();
+                doDelete(file);
             }
         }
     }
 
     @Override
     protected void doDelete(File file) {
-        file.delete();
-        size--;
+        if (!file.delete()) {
+            throw new StorageException("error in doDelete" +
+                    "", file.getName());
+        }
     }
 
     @Override
@@ -57,16 +58,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         } catch (IOException e) {
             throw new StorageException("error in doSave", file.getName());
         }
-        size++;
     }
 
     @Override
-    protected void doUpdate(File file, Resume r) {
-        try {
-            writeToFile(r, file);
-        } catch (IOException e) {
-            throw new StorageException("error in doUpdate", file.getName());
-        }
+    protected void doUpdate(File file, Resume resume) {
+        doSave(resume, file);
     }
 
     @Override
@@ -75,11 +71,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         File[] fileArray = directory.listFiles();
         if (fileArray != null) {
             for (File file : fileArray) {
-                try {
-                    resumeList.add(ResumeFromFile(file));
-                } catch (IOException e) {
-                    throw new StorageException("error in getStorage", file.getName());
-                }
+                resumeList.add(doGet(file));
             }
         }
         return resumeList;
@@ -92,12 +84,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected boolean isExist(File file) {
-        return (file.exists() && file.getParentFile().getAbsolutePath().equals(directory.getAbsolutePath()));
+        return file.exists();
     }
 
     @Override
     public int size() {
-        return size;
+        String[] fileArray = directory.list();
+        if (fileArray != null)
+            return fileArray.length;
+        else return 0;
     }
 
     protected abstract Resume ResumeFromFile(File file) throws IOException;
