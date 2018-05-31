@@ -26,15 +26,18 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        List<File> fileList = Arrays.asList(directory.listFiles());
-        for (File file : fileList) {
-            file.delete();
+        if (size != 0) {
+            List<File> fileList = Arrays.asList(directory.listFiles());
+            for (File file : fileList) {
+                file.delete();
+            }
+            size = 0;
         }
-        size = 0;
     }
 
     @Override
     public int size() {
+        directory.getParent()
         return size;
     }
 
