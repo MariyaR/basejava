@@ -21,14 +21,10 @@ public class MainFile {
 
     public static void printFileNames(File dir) {
         if (dir.isDirectory()) {
-            String[] list = dir.list();
-            for (String name : list) {
-                File file = null;
-                try {
-                    file = new File(dir.getCanonicalPath() + "/" + name);
+            File[] list = dir.listFiles();
+            if (list != null) {
+                for (File file : list) {
                     printFileNames(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         } else System.out.println(dir.getName());
