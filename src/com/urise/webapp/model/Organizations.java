@@ -10,20 +10,6 @@ public class Organizations extends SectionBasic {
         this.experience = experience;
     }
 
-    //    public void addRecord(Organization organization) {
-
-//        if (experience.size() == 0) {
-//            experience.add(organization);
-//        } else if (!experience.get(experience.size() - 1).getTitle().
-//                equals(organization.getTitle())) {
-//            experience.add(organization);
-//        } else {
-//            List<DateAndText> list = organization.getPeriods();
-//            int last = experience.size() - 1;
-//            experience.get(last).addPeriods(list);
-//        }
-//    }
-
     public List<Organization> getExperience() {
         return experience;
     }
