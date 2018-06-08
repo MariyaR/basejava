@@ -23,6 +23,10 @@ public class Organization {
         this.periods = periods;
     }
 
+    public void setPeriods(List<DateAndText> periods) {
+        this.periods = periods;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -44,12 +48,13 @@ public class Organization {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return Objects.equals(title, that.title);
+        return Objects.equals(title, that.title) &&
+                Objects.equals(periods, that.periods);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title);
+        return Objects.hash(title, periods);
     }
 
     @Override

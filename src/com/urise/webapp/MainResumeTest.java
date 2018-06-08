@@ -3,6 +3,7 @@ package com.urise.webapp;
 import com.urise.webapp.model.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.EnumMap;
 
 public class MainResumeTest {
@@ -32,14 +33,10 @@ public class MainResumeTest {
 
         Organization org1 = new Organization("employer1", job1);
         Organization org2 = new Organization("employer2", job2);
-        Organization org3 = new Organization("employer3", job3);
-        Organization org4 = new Organization("employer3", job4);
+        Organization org3 = new Organization("employer3", Arrays.asList(job3, job4));
 
-        Organizations workingExperience = new Organizations();
-        workingExperience.addRecord(org1);
-        workingExperience.addRecord(org2);
-        workingExperience.addRecord(org3);
-        workingExperience.addRecord(org4);
+        Organizations workingExperience = new Organizations(Arrays.asList(org1,org2,org3));
+
 
         EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
         sections.put(SectionName.Personal, personal);
