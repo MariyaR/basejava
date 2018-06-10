@@ -4,18 +4,22 @@ import java.util.*;
 
 public class Organizations extends SectionBasic {
 
-    private List<Organization> experience = new ArrayList<>();
+    private List<Organization> organizations = new ArrayList<>();
+
+    public Organizations(Organization... organizations) {
+        this(Arrays.asList(organizations));
+    }
 
     public Organizations(List<Organization> experience) {
-        this.experience = experience;
+        this.organizations = experience;
     }
 
-    public List<Organization> getExperience() {
-        return experience;
+    public List<Organization> getOrganizations() {
+        return organizations;
     }
 
-    public void setExperience(List<Organization> experience) {
-        this.experience = experience;
+    public void setOrganizations(List<Organization> organizations) {
+        this.organizations = organizations;
     }
 
     @Override
@@ -23,16 +27,16 @@ public class Organizations extends SectionBasic {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organizations that = (Organizations) o;
-        return Objects.equals(experience, that.experience);
+        return Objects.equals(organizations, that.organizations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(experience);
+        return Objects.hash(organizations);
     }
 
     @Override
     public String toString() {
-        return experience.toString();
+        return organizations.toString();
     }
 }

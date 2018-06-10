@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,14 @@ import java.util.Objects;
 public class ListOfStrings extends SectionBasic {
 
     private List<String> list = new ArrayList<>();
+
+    public ListOfStrings(String... items) {
+        this(new ArrayList<>(Arrays.asList(items)));
+    }
+
+    public ListOfStrings(List<String> list) {
+        this.list = list;
+    }
 
     public void addRecord(String record) {
         list.add(record);
