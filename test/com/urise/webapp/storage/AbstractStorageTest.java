@@ -46,10 +46,10 @@ public abstract class AbstractStorageTest {
         skills.addRecord("c++");
         skills.addRecord("hadoop");
 
-        DateAndText job1 = new DateAndText( LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
-        DateAndText job2 = new DateAndText( LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
-        DateAndText job3 = new DateAndText( LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
-        DateAndText job4 = new DateAndText( LocalDate.parse("2015-01-01"), LocalDate.parse("2017-01-01"), "some other responsibilities");
+        DateAndText job1 = new DateAndText("position1", LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
+        DateAndText job2 = new DateAndText( "position2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
+        DateAndText job3 = new DateAndText( "position3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
+        DateAndText job4 = new DateAndText( "position4", LocalDate.parse("2015-01-01"), LocalDate.parse("2017-01-01"), "some other responsibilities");
 
         Organization org1 = new Organization("employer1", job1);
         Organization org2 = new Organization("employer2", job2);

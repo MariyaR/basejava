@@ -30,14 +30,13 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             for (File file : fileArray) {
                 doDelete(file);
             }
-        }
+        } else throw new StorageException("error in clear", "empty directory");
     }
 
     @Override
     protected void doDelete(File file) {
         if (!file.delete()) {
-            throw new StorageException("error in doDelete" +
-                    "", file.getName());
+            throw new StorageException("error in doDelete", file.getName());
         }
     }
 
@@ -52,17 +51,22 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doSave(Resume resume, File file) {
+
         try {
             file.createNewFile();
-            writeToFile(resume, file);
         } catch (IOException e) {
             throw new StorageException("error in doSave", file.getName());
         }
+        doUpdate(file, resume);
     }
 
     @Override
     protected void doUpdate(File file, Resume resume) {
-        doSave(resume, file);
+        try {
+            writeToFile(resume, file);
+        } catch (IOException e) {
+            throw new StorageException("error in doUpdate", file.getName());
+        }
     }
 
     @Override
@@ -73,7 +77,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             for (File file : fileArray) {
                 resumeList.add(doGet(file));
             }
-        }
+        } else throw new StorageException("error in getStorage", "empty directory");
         return resumeList;
     }
 
