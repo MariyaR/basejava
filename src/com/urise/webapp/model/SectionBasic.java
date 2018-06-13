@@ -1,4 +1,6 @@
 package com.urise.webapp.model;
 
-public abstract class SectionBasic {
+import java.io.Serializable;
+
+public abstract class SectionBasic implements Serializable {
 }

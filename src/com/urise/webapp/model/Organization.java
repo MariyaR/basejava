@@ -2,6 +2,7 @@ package com.urise.webapp.model;
 
 import com.urise.webapp.Util.DateUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.Objects;
 import static com.urise.webapp.Util.DateUtil.of;
 import static com.urise.webapp.Util.DateUtil.NOW;
 
-public class Organization {
+public class Organization implements Serializable {
 
     private final String title;
     private List<DateAndText> periods = new ArrayList<>();
@@ -76,7 +77,7 @@ public class Organization {
     }
 
     //used for education and working experience
-    public static class DateAndText {
+    public static class DateAndText implements Serializable{
 
         private final String position;
         private final LocalDate startDate;

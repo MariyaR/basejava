@@ -1,12 +1,13 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.EnumMap;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-public class Resume implements Comparable<Resume> {
+public class Resume implements Comparable<Resume>, Serializable {
 
     private final String uuid;
     private String fullName;
