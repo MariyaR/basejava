@@ -1,10 +1,15 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organizations extends SectionBasic {
 
     private List<Organization> organizations = new ArrayList<>();
+
+    public Organizations() {}
 
     public Organizations(Organization... organizations) {
         this(Arrays.asList(organizations));

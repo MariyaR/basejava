@@ -1,14 +1,21 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
 //used for Personal information and Current position
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PlainText extends SectionBasic {
 
-    private final String Field;
+    private String Field;
 
-    public PlainText( String field) {
-        Objects.requireNonNull(field,"field can not be null");
+    public PlainText() {
+
+    }
+
+    public PlainText(String field) {
+        Objects.requireNonNull(field, "field can not be null");
         this.Field = field;
     }
 

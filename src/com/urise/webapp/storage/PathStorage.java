@@ -14,11 +14,12 @@ import java.util.stream.Collectors;
 public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
 
-    private SerializeStrategy srlStrategy = new ObjectStreamSerializeStrategy();
+    private SerializeStrategy srlStrategy;
 
-    protected PathStorage(String dir) {
+    protected PathStorage(String dir, SerializeStrategy srlStrategy) {
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
+        this.srlStrategy = srlStrategy;
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory or is not writable");
         }

@@ -1,7 +1,11 @@
 package com.urise.webapp.model;
 
 import com.urise.webapp.Util.DateUtil;
+import com.urise.webapp.Util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +20,15 @@ import java.util.Objects;
 import static com.urise.webapp.Util.DateUtil.of;
 import static com.urise.webapp.Util.DateUtil.NOW;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
 
-    private final String title;
+    private String title;
     private List<DateAndText> periods = new ArrayList<>();
+
+    public Organization() {
+    }
 
     public Organization(String title) {
         this.title = title;
@@ -77,12 +86,18 @@ public class Organization implements Serializable {
     }
 
     //used for education and working experience
-    public static class DateAndText implements Serializable{
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class DateAndText implements Serializable {
 
-        private final String position;
-        private final LocalDate startDate;
-        private final LocalDate endDate;
-        private final String responsibilities;
+        private String position;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate startDate;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate endDate;
+        private String responsibilities;
+
+        public DateAndText() {
+        }
 
         public DateAndText(String title, int startYear, Month startMonth, String description) {
             this(title, of(startYear, startMonth), NOW, description);

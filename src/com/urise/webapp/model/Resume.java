@@ -1,18 +1,28 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.EnumMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
+    private static final long serialVersionUID = 1L;
 
-    private final String uuid;
+    private String uuid;
     private String fullName;
-    private EnumMap<ContactName, String> contacts = new EnumMap<ContactName, String>(ContactName.class);
-    private EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
+    private Map<ContactName, String> contacts = new EnumMap<ContactName, String>(ContactName.class);
+    private Map<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
+
+    public Resume() {
+    }
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -37,7 +47,7 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.fullName = fullName;
     }
 
-    public EnumMap<ContactName, String> getContacts() {
+    public Map<ContactName, String> getContacts() {
         return contacts;
     }
 
@@ -45,7 +55,7 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.contacts = contacts;
     }
 
-    public EnumMap<SectionName, SectionBasic> getSections() {
+    public Map<SectionName, SectionBasic> getSections() {
         return sections;
     }
 

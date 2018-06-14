@@ -1,14 +1,19 @@
 package com.urise.webapp.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 //used for Skills and Achievements
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ListOfStrings extends SectionBasic {
 
     private List<String> list = new ArrayList<>();
+
+    public ListOfStrings () {}
 
     public ListOfStrings(String... items) {
         this(new ArrayList<>(Arrays.asList(items)));
