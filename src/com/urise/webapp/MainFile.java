@@ -1,5 +1,9 @@
 package com.urise.webapp;
 
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.PathStorage;
+import com.urise.webapp.storage.Storage;
+
 import java.io.File;
 import java.io.IOException;
 
