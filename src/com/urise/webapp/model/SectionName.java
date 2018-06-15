@@ -14,9 +14,12 @@ public enum SectionName {
         this.content = content;
     }
 
-    @Override
-    public String toString() {
+    public String getContent() {
         return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }

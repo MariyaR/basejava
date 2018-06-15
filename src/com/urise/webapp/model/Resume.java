@@ -99,13 +99,13 @@ public class Resume implements Comparable<Resume>, Serializable {
     private void appendIfExist(StringBuilder st, ContactName c) {
         if (contacts.containsKey(c)) {
 
-            st.append(c.toString()).append(contacts.get(c)).append("\n");
+            st.append(c.getContent()).append(contacts.get(c)).append("\n");
         }
     }
 
     private void appendIfExist(StringBuilder st, SectionName s) {
         if (sections.containsKey(s)) {
-            st.append(s.toString());
+            st.append(s.getContent());
             st.append(sections.get(s));
         }
     }

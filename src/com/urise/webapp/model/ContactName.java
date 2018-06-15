@@ -15,8 +15,12 @@ public enum ContactName {
         this.content = s;
     }
 
-    @Override
-    public String toString() {
+    public String getContent() {
         return content;
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
 }
