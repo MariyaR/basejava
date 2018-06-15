@@ -1,12 +1,13 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.Serialization;
 
+import com.urise.webapp.Serialization.SerializeStrategy;
 import com.urise.webapp.Util.XmlParser;
 import com.urise.webapp.model.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class XMLStreamSerializeStrategy implements SerializeStrategy{
+public class XMLStreamSerializeStrategy implements SerializeStrategy {
     private XmlParser xmlParser;
 
     public XMLStreamSerializeStrategy() {

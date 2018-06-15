@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Serialization.SerializeStrategy;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
+
     private Path directory;
 
     private SerializeStrategy srlStrategy;
@@ -60,7 +62,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected boolean isExist(Path Path) {
-        return Files.exists(Path);
+        return Files.isRegularFile(Path);
     }
 
     @Override

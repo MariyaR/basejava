@@ -1,4 +1,4 @@
-package com.urise.webapp.storage;
+package com.urise.webapp.Serialization;
 
 import com.urise.webapp.Util.JsonParser;
 import com.urise.webapp.model.Resume;
@@ -6,7 +6,7 @@ import com.urise.webapp.model.Resume;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-public class JsonSerializeStrategy implements SerializeStrategy{
+public class JsonSerializeStrategy implements SerializeStrategy {
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
