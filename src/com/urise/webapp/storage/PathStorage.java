@@ -14,9 +14,10 @@ import java.util.stream.Collectors;
 public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
 
-    private SerializeStrategy srlStrategy = new ObjectStreamSerializeStrategy();
+    private SerializeStrategy srlStrategy;
 
-    protected PathStorage(String dir) {
+    protected PathStorage(String dir, SerializeStrategy srlStrategy) {
+        this.srlStrategy = srlStrategy;
         directory = Paths.get(dir);
         Objects.requireNonNull(directory, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
@@ -59,7 +60,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected boolean isExist(Path Path) {
-        return Files.exists(Path);
+        return Files.isRegularFile(Path);
     }
 
     @Override

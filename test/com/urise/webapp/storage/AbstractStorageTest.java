@@ -16,6 +16,8 @@ public abstract class AbstractStorageTest {
 
     protected Storage storage;
 
+    protected static final String DIRECTORY = "./src/com/urise/webapp/TestDir";
+
     protected static final String UUID_1 = "uuid1";
     protected static final String UUID_2 = "uuid2";
     protected static final String UUID_3 = "uuid3";
