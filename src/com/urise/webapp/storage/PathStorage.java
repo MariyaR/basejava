@@ -1,6 +1,6 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Serialization.SerializeStrategy;
+import com.urise.webapp.serialization.SerializeStrategy;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 

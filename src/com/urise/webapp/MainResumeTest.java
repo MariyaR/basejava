@@ -1,7 +1,9 @@
 package com.urise.webapp;
 
+import com.urise.webapp.serialization.DataStreamSerializeStrategy;
 import com.urise.webapp.model.*;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -44,6 +46,20 @@ public class MainResumeTest {
         sections.put(SectionName.Skills,skills);
         sections.put(SectionName.Experience,workingExperience);
         resume.setSections(sections);
-        System.out.println(resume);
+        //System.out.println(resume);
+
+        Resume r = new Resume();
+
+        DataStreamSerializeStrategy sr = new DataStreamSerializeStrategy();
+        try (FileOutputStream fos = new FileOutputStream(new File("./src/com/urise/webapp/TestDir/test"));
+             FileInputStream fis = new FileInputStream(new File("./src/com/urise/webapp/TestDir/test") )){
+
+            sr.doWrite(resume,fos);
+            r = (Resume) sr.doRead(fis);
+            System.out.println(r);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -63,6 +63,14 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.sections = sections;
     }
 
+    public void addContact(ContactName type, String value) {
+        contacts.put(type, value);
+    }
+
+    public void addSection(SectionName type, SectionBasic section) {
+        sections.put(type, section);
+    }
+
     @Override
     public int compareTo(Resume o) {
         if (fullName.equals(o.fullName)) {

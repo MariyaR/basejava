@@ -1,14 +1,11 @@
-package com.urise.webapp.Util;
+package com.urise.webapp.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.SectionBasic;
-import sun.swing.SwingUtilities2;
 
 import java.io.Reader;
 import java.io.Writer;
-import java.util.EnumMap;
 
 public class JsonParser {
     private static Gson GSON = new GsonBuilder()

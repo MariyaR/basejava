@@ -27,6 +27,10 @@ public class Organizations extends SectionBasic {
         this.organizations = organizations;
     }
 
+    public void addOrganization (Organization org) {
+        organizations.add(org);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,6 +46,11 @@ public class Organizations extends SectionBasic {
 
     @Override
     public String toString() {
-        return organizations.toString();
+        int size = organizations.size();
+        String st="";
+        for (int i=0; i< size; i++) {
+            st = st + organizations.get(i).toString();
+        }
+        return st;
     }
 }

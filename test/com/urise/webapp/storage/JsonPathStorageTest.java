@@ -1,6 +1,6 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Serialization.JsonSerializeStrategy;
+import com.urise.webapp.serialization.JsonSerializeStrategy;
 
 public class JsonPathStorageTest extends AbstractStorageTest{
 

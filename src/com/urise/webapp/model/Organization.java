@@ -1,7 +1,6 @@
 package com.urise.webapp.model;
 
-import com.urise.webapp.Util.DateUtil;
-import com.urise.webapp.Util.LocalDateAdapter;
+import com.urise.webapp.util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,13 +11,11 @@ import java.util.List;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
 
-import static com.urise.webapp.Util.DateUtil.of;
-import static com.urise.webapp.Util.DateUtil.NOW;
+import static com.urise.webapp.util.DateUtil.of;
+import static com.urise.webapp.util.DateUtil.NOW;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -56,6 +53,10 @@ public class Organization implements Serializable {
         return periods;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public void addPeriod(DateAndText period) {
         periods.add(period);
     }
@@ -82,7 +83,11 @@ public class Organization implements Serializable {
     public String toString() {
         ArrayList<DateAndText> sortedPeriods = new ArrayList<>(periods);
         sortedPeriods.sort(Comparator.comparing(DateAndText::getStartDate).reversed());
-        return title + '\n' + sortedPeriods;
+        String st=title + "\n";
+        for (int i=0; i<periods.size(); i++) {
+            st = st + periods.get(i);
+        }
+        return st;
     }
 
     //used for education and working experience

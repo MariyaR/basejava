@@ -1,4 +1,4 @@
-package com.urise.webapp.Util;
+package com.urise.webapp.util;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

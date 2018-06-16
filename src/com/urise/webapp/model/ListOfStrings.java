@@ -23,6 +23,10 @@ public class ListOfStrings extends SectionBasic {
         this.list = list;
     }
 
+    public List<String> getList() {
+        return list;
+    }
+
     public void addRecord(String record) {
         list.add(record);
     }

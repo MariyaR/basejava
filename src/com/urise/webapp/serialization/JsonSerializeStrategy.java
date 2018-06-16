@@ -1,6 +1,6 @@
-package com.urise.webapp.Serialization;
+package com.urise.webapp.serialization;
 
-import com.urise.webapp.Util.JsonParser;
+import com.urise.webapp.util.JsonParser;
 import com.urise.webapp.model.Resume;
 
 import java.io.*;

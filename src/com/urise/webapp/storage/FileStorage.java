@@ -1,7 +1,7 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.Serialization.ObjectStreamSerializeStrategy;
-import com.urise.webapp.Serialization.SerializeStrategy;
+import com.urise.webapp.serialization.ObjectStreamSerializeStrategy;
+import com.urise.webapp.serialization.SerializeStrategy;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -15,8 +15,10 @@ public class FileStorage extends AbstractStorage<File> {
 
     private File directory;
 
-    protected FileStorage(File directory) {
+    protected FileStorage(File directory, SerializeStrategy srl) {
         Objects.requireNonNull(directory, "directory must not be null");
+        Objects.requireNonNull(srl, "serialization strategy can not be null");
+        this.srlStrategy = srl;
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
         }
