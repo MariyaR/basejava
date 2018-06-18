@@ -20,6 +20,9 @@ import static com.urise.webapp.util.DateUtil.NOW;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private Link homePage;
 
     private String title;
     private List<DateAndText> periods = new ArrayList<>();
@@ -41,6 +44,11 @@ public class Organization implements Serializable {
         this.periods = periods;
     }
 
+    public Organization(String title, List<DateAndText> periods, Link homePage) {
+        this(title, periods);
+        this.homePage = homePage;
+    }
+
     public void setPeriods(List<DateAndText> periods) {
         this.periods = periods;
     }
@@ -57,6 +65,14 @@ public class Organization implements Serializable {
         this.title = title;
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(Link homePage) {
+        this.homePage = homePage;
+    }
+
     public void addPeriod(DateAndText period) {
         periods.add(period);
     }
@@ -70,20 +86,21 @@ public class Organization implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return Objects.equals(title, that.title) &&
+        return Objects.equals(homePage, that.homePage) &&
+                Objects.equals(title, that.title) &&
                 Objects.equals(periods, that.periods);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, periods);
+        return Objects.hash(homePage, title, periods);
     }
 
     @Override
     public String toString() {
         ArrayList<DateAndText> sortedPeriods = new ArrayList<>(periods);
         sortedPeriods.sort(Comparator.comparing(DateAndText::getStartDate).reversed());
-        String st=title + "\n";
+        String st=title + "\n" + homePage + "\n";
         for (int i=0; i<periods.size(); i++) {
             st = st + periods.get(i);
         }
@@ -112,15 +129,14 @@ public class Organization implements Serializable {
             this(title, of(startYear, startMonth), of(endYear, endMonth), description);
         }
 
-        public DateAndText(String position, LocalDate startDate, LocalDate endDate, String field) {
+        public DateAndText(String position, LocalDate startDate, LocalDate endDate, String responsibilities) {
             Objects.requireNonNull(position, "Position can not be null");
             Objects.requireNonNull(startDate, "Start date can not be null");
             Objects.requireNonNull(endDate, "End date can not be null");
-            Objects.requireNonNull(field, "Field can not be null");
             this.position = position;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.responsibilities = field;
+            this.responsibilities = responsibilities;
         }
 
         public LocalDate getStartDate() {

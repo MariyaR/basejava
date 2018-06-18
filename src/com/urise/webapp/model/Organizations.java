@@ -6,6 +6,7 @@ import java.util.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organizations extends SectionBasic {
+    private static final long serialVersionUID = 1L;
 
     private List<Organization> organizations = new ArrayList<>();
 

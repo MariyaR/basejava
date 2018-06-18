@@ -10,6 +10,7 @@ import java.util.Objects;
 //used for Skills and Achievements
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ListOfStrings extends SectionBasic {
+    private static final long serialVersionUID = 1L;
 
     private List<String> list = new ArrayList<>();
 

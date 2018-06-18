@@ -7,6 +7,7 @@ import java.util.Objects;
 //used for Personal information and Current position
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PlainText extends SectionBasic {
+    private static final long serialVersionUID = 1L;
 
     private String Field;
 

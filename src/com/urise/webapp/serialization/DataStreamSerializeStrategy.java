@@ -28,17 +28,25 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
             dos.writeInt(sections.size());
             for (Map.Entry<SectionName, SectionBasic> entry : sections.entrySet()) {
                 SectionBasic section = entry.getValue();
-                String sectionName = section.getClass().getSimpleName();
-                dos.writeUTF(sectionName);
-                dos.writeUTF(entry.getKey().name());
+                SectionName sectionName = entry.getKey();
+                dos.writeUTF(sectionName.toString());
                 switch (sectionName) {
-                    case PLAIN_TEXT:
+                    case Personal:
                         doWrite(dos, (PlainText) section);
                         break;
-                    case LIST_OF_STRINGS:
+                    case CurrentPosition:
+                        doWrite(dos, (PlainText) section);
+                        break;
+                    case Skills:
                         doWrite(dos, (ListOfStrings) section);
                         break;
-                    case ORGANIZATIONS:
+                    case Achievements:
+                        doWrite(dos, (ListOfStrings) section);
+                        break;
+                    case Experience:
+                        doWrite(dos, (Organizations) section);
+                        break;
+                    case Education:
                         doWrite(dos, (Organizations) section);
                         break;
                 }
@@ -54,8 +62,7 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
         List<String> list = section.getList();
         int size = list.size();
         dos.writeInt(size);
-        for (int i = 0; i < size; i++) {
-            String s = list.get(i);
+        for (String s : list) {
             dos.writeUTF(s);
         }
     }
@@ -66,14 +73,14 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
         int size = orgs.size();
         int count;
         dos.writeInt(size);
-        for (int i = 0; i < size; i++) {
-            Organization org = orgs.get(i);
+        for (Organization org : orgs) {
             dos.writeUTF(org.getTitle());
+            dos.writeUTF(org.getHomePage().getName());
+            dos.writeUTF(org.getHomePage().getUrl());
             List<Organization.DateAndText> periods = org.getPeriods();
             count = periods.size();
             dos.writeInt(count);
-            for (int j = 0; j < count; j++) {
-                Organization.DateAndText period = periods.get(j);
+            for (Organization.DateAndText period : periods) {
                 dos.writeUTF(period.getPosition());
                 dos.writeUTF(period.getStartDate().toString());
                 dos.writeUTF(period.getEndDate().toString());
@@ -95,23 +102,32 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
             }
             size = dis.readInt();
             for (int i = 0; i < size; i++) {
-                String className = dis.readUTF();
-                resume.addSection(SectionName.valueOf(dis.readUTF()), doRead(className, dis));
+                SectionName sectionName = SectionName.valueOf(dis.readUTF());
+                resume.addSection(sectionName, doRead(sectionName, dis));
             }
             return resume;
         }
     }
 
-    private SectionBasic doRead(String className, DataInputStream dis) throws IOException {
+    private SectionBasic doRead(SectionName sectionName, DataInputStream dis) throws IOException {
         SectionBasic section = null;
-        switch (className) {
-            case PLAIN_TEXT:
+        switch (sectionName) {
+            case Personal:
                 section = doReadPlainText(dis);
                 break;
-            case LIST_OF_STRINGS:
+            case CurrentPosition:
+                section = doReadPlainText(dis);
+                break;
+            case Skills:
                 section = doReadListOfStrings(dis);
                 break;
-            case ORGANIZATIONS:
+            case Achievements:
+                section = doReadListOfStrings(dis);
+                break;
+            case Experience:
+                section = doReadOrganizations(dis);
+                break;
+            case Education:
                 section = doReadOrganizations(dis);
                 break;
         }
@@ -131,6 +147,7 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
     private Organization doReadOrganization(DataInputStream dis) throws IOException {
         Organization org = new Organization();
         org.setTitle(dis.readUTF());
+        org.setHomePage(new Link (dis.readUTF(), dis.readUTF()));
         String position;
         LocalDate startDate;
         LocalDate endDate;
