@@ -9,10 +9,6 @@ import java.util.Map;
 
 public class DataStreamSerializeStrategy implements SerializeStrategy {
 
-    private static final String PLAIN_TEXT = "PlainText";
-    private static final String LIST_OF_STRINGS = "ListOfStrings";
-    private static final String ORGANIZATIONS = "Organizations";
-
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
