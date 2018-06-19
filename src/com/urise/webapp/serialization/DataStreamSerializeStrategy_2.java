@@ -33,20 +33,14 @@ public class DataStreamSerializeStrategy_2 implements SerializeStrategy {
     private void doWrite(DataOutputStream dos, SectionName sectionName, SectionBasic section) throws IOException {
         switch (sectionName) {
             case Personal:
-                doWritePlainText(dos, (PlainText) section);
-                break;
             case CurrentPosition:
                 doWritePlainText(dos, (PlainText) section);
                 break;
             case Skills:
-                doWriteListOfStrings(dos, (ListOfStrings) section);
-                break;
             case Achievements:
                 doWriteListOfStrings(dos, (ListOfStrings) section);
                 break;
             case Experience:
-                doWriteOrganizations(dos, (Organizations) section);
-                break;
             case Education:
                 doWriteOrganizations(dos, (Organizations) section);
                 break;
@@ -110,20 +104,14 @@ public class DataStreamSerializeStrategy_2 implements SerializeStrategy {
         SectionBasic section = null;
         switch (sectionName) {
             case Personal:
-                section = doReadPlainText(dis);
-                break;
             case CurrentPosition:
                 section = doReadPlainText(dis);
                 break;
             case Skills:
-                section = doReadListOfStrings(dis);
-                break;
             case Achievements:
                 section = doReadListOfStrings(dis);
                 break;
             case Experience:
-                section = doReadOrganizations(dis);
-                break;
             case Education:
                 section = doReadOrganizations(dis);
                 break;
