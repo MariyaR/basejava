@@ -32,7 +32,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             Files.list(directory).forEach(this::doDelete);
         } catch (IOException e) {
-            throw new StorageException("Path delete error", null);
+            throw new StorageException("Path delete error", e);
         }
     }
 
@@ -41,7 +41,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             return (int) Files.list(directory).count();
         } catch (IOException e) {
-            throw new StorageException("can not count files", null);
+            throw new StorageException("can not count files", e);
         }
     }
 
@@ -99,7 +99,7 @@ public class PathStorage extends AbstractStorage<Path> {
         try {
             return Files.list(directory).map(this::doGet).collect(Collectors.toList());
         } catch (IOException e) {
-            throw new StorageException("can't return storage", null);
+            throw new StorageException("can't return storage", e);
         }
     }
 }
