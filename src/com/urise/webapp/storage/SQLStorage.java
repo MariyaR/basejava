@@ -65,7 +65,9 @@ public class SQLStorage implements Storage {
             try {
                 return pr.executeUpdate();
             } catch (PSQLException e) {
-                throw new ExistStorageException("this resume is already exist");
+                if (e.getSQLState().equals("23505"))
+                    throw new ExistStorageException("this resume is already exist");
+                else throw e;
             }
         }, SAVE_QUERY, r.getUuid(), r.getFullName());
 
