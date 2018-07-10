@@ -25,7 +25,7 @@ public abstract class AbstractStorage<KeyOrIndex> implements Storage {
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> sortedList = getStorage();
-        sortedList.sort(Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid));
+        sortedList.sort(Comparator.comparing(Resume::getUuid).thenComparing(Resume::getFullName));
         return sortedList;
     }
 
