@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 public class SQLHelper {
     private final ConnectionFactory connectionFactory;
-    private static final SQLExecutor<Integer> INT_HELPER = PreparedStatement::executeUpdate;
 
     public SQLHelper(String dbUrl, String dbUser, String dbPassword) {
         connectionFactory = () -> DriverManager.getConnection(dbUrl, dbUser, dbPassword);
@@ -23,19 +22,7 @@ public class SQLHelper {
         T execute(PreparedStatement ps) throws SQLException;
     }
 
-    public <T> T execute(SQLExecutor<T> helper, String query) {
-        return this.execute(helper, query, null);
-    }
-
-    public Integer execute(String query, String... parameters) {
-        return this.execute(INT_HELPER, query, parameters);
-    }
-
-    public Integer execute(String query) {
-        return this.execute(INT_HELPER, query);
-    }
-
-    public <T> T execute(SQLExecutor<T> helper, String query, String... parameters) {
+    public <T> T execute(SQLHelper.SQLExecutor<T> helper, String query, String... parameters) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             if (parameters != null) {
@@ -50,11 +37,14 @@ public class SQLHelper {
         }
     }
 
-    public <T> T transactionalExecute(SqlTransaction<T> executor, String query, String... parameters) {
+    public <T> T transactionalExecute(PreparedStatement ps, SQLHelper.SqlTransaction<T> executor, String query, String... parameters) {
         try (Connection conn = connectionFactory.getConnection()) {
             try {
                 conn.setAutoCommit(false);
-                PreparedStatement ps = conn.prepareStatement(query);
+                if (ps == null) {
+                    ps = conn.prepareStatement(query);
+                }
+
                 if (parameters != null) {
                     int size = parameters.length;
                     for (int i = 0; i < size; i++) {
