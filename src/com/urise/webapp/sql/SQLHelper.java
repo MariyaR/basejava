@@ -19,12 +19,15 @@ public class SQLHelper {
     }
 
     public interface SqlTransaction<T> {
-        T execute(PreparedStatement ps) throws SQLException;
+        T execute(Connection con) throws SQLException;
     }
 
-    public <T> T execute(SQLHelper.SQLExecutor<T> helper, String query, String... parameters) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
+    public <T> T execute(PreparedStatement ps, SQLHelper.SQLExecutor<T> helper, String query, String... parameters) {
+        try (Connection conn = connectionFactory.getConnection()) {
+
+            if (ps == null) {
+                ps = conn.prepareStatement(query);
+            }
             if (parameters != null) {
                 int size = parameters.length;
                 for (int i = 0; i < size; i++) {
@@ -37,23 +40,13 @@ public class SQLHelper {
         }
     }
 
-    public <T> T transactionalExecute(PreparedStatement ps, SQLHelper.SqlTransaction<T> executor, String query, String... parameters) {
+    public <T> T transactionalExecute(SqlTransaction<T> executor) {
         try (Connection conn = connectionFactory.getConnection()) {
             try {
                 conn.setAutoCommit(false);
-                if (ps == null) {
-                    ps = conn.prepareStatement(query);
-                }
-
-                if (parameters != null) {
-                    int size = parameters.length;
-                    for (int i = 0; i < size; i++) {
-                        ps.setString(i + 1, parameters[i]);
-                    }
-                }
-                T result = executor.execute(ps);
+                T res = executor.execute(conn);
                 conn.commit();
-                return result;
+                return res;
             } catch (SQLException e) {
                 conn.rollback();
                 throw ExceptionUtil.convertException(e);

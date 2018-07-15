@@ -13,6 +13,7 @@ import java.util.*;
 
 public abstract class AbstractStorageTest {
 
+    private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
     protected Storage storage;
 
     protected static final String DIRECTORY = "./src/com/urise/webapp/TestDir";
@@ -92,7 +93,7 @@ public abstract class AbstractStorageTest {
     public void delete() throws Exception {
         Resume[] expectedStorage = {RESUME_1, RESUME_3};
         storage.delete(UUID_2);
-        Arrays.sort(expectedStorage, Comparator.comparing(Resume::getUuid));
+        Arrays.sort(expectedStorage, RESUME_COMPARATOR);
         Assert.assertArrayEquals(expectedStorage, getStorageAsArray());
     }
 
@@ -109,7 +110,7 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAllSorted() throws Exception {
         Resume[] expectedStorage = {RESUME_1, RESUME_2, RESUME_3};
-        Arrays.sort(expectedStorage, Comparator.comparing(Resume::getUuid));
+        Arrays.sort(expectedStorage, RESUME_COMPARATOR);
         Assert.assertArrayEquals(expectedStorage, getStorageAsArray());
     }
 
@@ -122,7 +123,7 @@ public abstract class AbstractStorageTest {
     public void save() throws Exception {
         Resume[] expectedStorage = {RESUME_1, RESUME_2, RESUME_3, RESUME_4};
         storage.save(RESUME_4);
-        Arrays.sort(expectedStorage, Comparator.comparing(Resume::getUuid));
+        Arrays.sort(expectedStorage, RESUME_COMPARATOR);
         Assert.assertArrayEquals(expectedStorage, getStorageAsArray());
     }
 
