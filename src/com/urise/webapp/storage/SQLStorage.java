@@ -26,16 +26,6 @@ public class SQLStorage implements Storage {
     private static final String UPDATE_CONTACT;
     private static final String UPDATE_RESUME;
 
-    private static PreparedStatement clearPrepStatement;
-    private static PreparedStatement countPrepStatement;
-    private static PreparedStatement deletePrepStatement;
-    private static PreparedStatement insertContactPrepStatement;
-    private static PreparedStatement insertResumePrepStatement;
-    private static PreparedStatement getPrepStatement;
-    private static PreparedStatement getAllPrepStatement;
-    private static PreparedStatement updateContactPrepStatement;
-    private static PreparedStatement updateResumePrepStatement;
-
     static {
         CLEAR_DB = "DELETE FROM resume";
         COUNT = "SELECT COUNT(*) AS total FROM resume";
@@ -61,25 +51,22 @@ public class SQLStorage implements Storage {
 
     @Override
     public void clear() {
-        helper.execute(clearPrepStatement, PreparedStatement::executeUpdate, CLEAR_DB);
+        helper.execute(PreparedStatement::executeUpdate, CLEAR_DB);
     }
 
     @Override
     public Resume get(String uuid) {
-        return helper.transactionalExecute(conn -> {
-            try (PreparedStatement ps = conn.prepareStatement(GET_RESUME_CONTACTS)) {
-                ps.setString(1, uuid);
-                ResultSet rs = ps.executeQuery();
-                if (!rs.next()) {
-                    throw new NotExistStorageException(uuid);
-                }
-                Resume r = new Resume(uuid, rs.getString("full_name"));
-                do {
-                    insertContact(rs, r);
-                } while (rs.next());
-                return r;
+        return helper.execute(ps -> {
+            ResultSet rs = ps.executeQuery();
+            if (!rs.next()) {
+                throw new NotExistStorageException(uuid);
             }
-        });
+            Resume resume = new Resume(uuid, rs.getString("full_name"));
+            do {
+                insertContact(rs, resume);
+            } while (rs.next());
+            return resume;
+        }, GET_RESUME_CONTACTS, uuid);
     }
 
     @Override
@@ -104,7 +91,7 @@ public class SQLStorage implements Storage {
 
     @Override
     public void delete(String uuid) {
-        int result = helper.execute(deletePrepStatement, PreparedStatement::executeUpdate, DELETE_RESUME, uuid);
+        int result = helper.execute(PreparedStatement::executeUpdate, DELETE_RESUME, uuid);
         if (result == 0) {
             throw new NotExistStorageException("no such resume in data base");
         }
@@ -112,16 +99,12 @@ public class SQLStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return helper.transactionalExecute(conn -> {
-            try (PreparedStatement ps = conn.prepareStatement(GET_ALL)) {
-                return getListResumes(ps);
-            }
-        });
+        return helper.execute(this::getListResumes, GET_ALL);
     }
 
     @Override
     public int size() {
-        return helper.execute(countPrepStatement, ps -> {
+        return helper.execute(ps -> {
             ResultSet rs = ps.executeQuery();
             if (!rs.next()) {
                 return 0;
