@@ -22,15 +22,9 @@ public class SQLHelper {
         T execute(Connection con) throws SQLException;
     }
 
-    public <T> T execute(SQLHelper.SQLExecutor<T> helper, String query, String... parameters) {
+    public <T> T execute(SQLHelper.SQLExecutor<T> helper, String query) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);) {
-            if (parameters != null) {
-                int size = parameters.length;
-                for (int i = 0; i < size; i++) {
-                    ps.setString(i + 1, parameters[i]);
-                }
-            }
             return helper.doHelp(ps);
         } catch (SQLException e) {
             throw new StorageException(e);

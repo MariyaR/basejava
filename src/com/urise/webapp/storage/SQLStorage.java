@@ -1,17 +1,15 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.NotExistStorageException;
-import com.urise.webapp.model.ContactName;
-import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.*;
 import com.urise.webapp.sql.SQLHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SQLStorage implements Storage {
     private final SQLHelper helper;
@@ -35,13 +33,16 @@ public class SQLStorage implements Storage {
             }
             Resume resume = new Resume(uuid, rs.getString("full_name"));
             do {
-                insertContact(rs, resume);
+                addContact(rs, resume);
+                addPlainText(rs, resume);
             } while (rs.next());
             return resume;
         }, "" +
                 "SELECT * FROM resume r " +
                 "LEFT JOIN contact c " +
                 "ON r.uuid = c.resume_uuid " +
+                "LEFT JOIN plain_text p " +
+                "ON r.uuid = p.plain_resume_uuid " +
                 "WHERE r.uuid =? ");
     }
 
@@ -52,6 +53,8 @@ public class SQLStorage implements Storage {
                         throw new NotExistStorageException(r.getUuid());
                     deleteContacts(r, conn);
                     insertContacts(r, conn);
+                    deletePlainText(r, conn);
+                    insertPlaintText(r, conn);
                     return null;
                 }
         );
@@ -62,6 +65,7 @@ public class SQLStorage implements Storage {
         helper.transactionalExecute(conn -> {
                     insertOrUpdateResume(r, conn, "INSERT INTO resume (full_name, uuid) VALUES (?,?)");
                     insertContacts(r, conn);
+                    insertPlaintText(r, conn);
                     return null;
                 }
         );
@@ -79,11 +83,35 @@ public class SQLStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return helper.execute(this::getListResumes, "" +
-                "SELECT * FROM resume r " +
-                "LEFT JOIN contact c " +
-                "ON r.uuid = c.resume_uuid " +
-                "ORDER BY full_name");
+        return helper.transactionalExecute(conn -> {
+            Map<String, Resume> map = new HashMap<>();
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume ORDER BY full_name")) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String uuid = rs.getString("uuid");
+                    map.put(uuid, new Resume(uuid, rs.getString("full_name")));
+                }
+            }
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM contact")) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String uuid = rs.getString("resume_uuid");
+                    addContact(rs, map.get(uuid));
+                }
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM plain_text")) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    String uuid = rs.getString("plain_resume_uuid");
+                    addPlainText(rs, map.get(uuid));
+                }
+            }
+
+            List<Resume> list = new ArrayList<>(map.values());
+            Collections.sort(list);
+            return list;
+        });
     }
 
     @Override
@@ -104,12 +132,43 @@ public class SQLStorage implements Storage {
         }
     }
 
-    private void insertContact(ResultSet rs, Resume r) throws SQLException {
+    private void deletePlainText(Resume r, Connection conn) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE  FROM plain_text WHERE plain_resume_uuid=?")) {
+            ps.setString(1, r.getUuid());
+            ps.execute();
+        }
+    }
+
+    private void addContact(ResultSet rs, Resume r) throws SQLException {
         String value = rs.getString("value");
         String type = rs.getString("type");
         if (value != null && type != null) {
             ContactName name = ContactName.valueOf(type);
             r.addContact(name, value);
+        }
+    }
+
+    private void addPlainText(ResultSet rs, Resume r) throws SQLException {
+        String value = rs.getString("plain_value");
+        String type = rs.getString("plain_type");
+        if (value != null && type != null) {
+            SectionName name = SectionName.valueOf(type);
+            switch (name) {
+                case Personal:
+                case CurrentPosition: {
+                    PlainText section = new PlainText(value);
+                    r.addSection(name, section);
+                }
+                break;
+                case Skills:
+                case Achievements: {
+                    ListOfStrings section = new ListOfStrings();
+                    Arrays.stream(value.split("\n")).forEach(s -> section.addRecord(s));
+                    r.addSection(name, section);
+                }
+                break;
+
+            }
         }
     }
 
@@ -125,29 +184,35 @@ public class SQLStorage implements Storage {
         }
     }
 
+    private void insertPlaintText(Resume r, Connection conn) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO plain_text (plain_value, plain_resume_uuid, plain_type) VALUES (?,?,?)")) {
+            for (Map.Entry<SectionName, SectionBasic> e : r.getSections().entrySet()) {
+                if (e.getValue() instanceof PlainText) {
+                    ps.setString(1, ((PlainText) e.getValue()).getField());
+                    ps.setString(2, r.getUuid());
+                    ps.setString(3, e.getKey().name());
+                    ps.addBatch();
+                }
+                if (e.getValue() instanceof ListOfStrings) {
+                    ListOfStrings lOfS = (ListOfStrings) e.getValue();
+                    String listOfString = lOfS.getList().stream().collect(Collectors.joining("\n"));
+                    ps.setString(1, listOfString);
+                    ps.setString(2, r.getUuid());
+                    ps.setString(3, e.getKey().name());
+                    ps.addBatch();
+                }
+            }
+            ps.executeBatch();
+        }
+
+    }
+
     private int insertOrUpdateResume(Resume r, Connection conn, String query) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, r.getFullName());
             ps.setString(2, r.getUuid());
             return ps.executeUpdate();
         }
-    }
-
-    private List<Resume> getListResumes(PreparedStatement ps) throws SQLException {
-        ResultSet rs = ps.executeQuery();
-        List<Resume> rList = new ArrayList<>();
-        Resume r = new Resume("", "dummy");
-        while (rs.next()) {
-            if (!rs.getString("uuid").equals(r.getUuid())) {
-                if (!r.getUuid().equals("")) {
-                    rList.add(r);
-                }
-                r = new Resume(rs.getString("uuid"), rs.getString("full_name"));
-            }
-            insertContact(rs, r);
-        }
-        rList.add(r);
-        return rList;
     }
 
 }
