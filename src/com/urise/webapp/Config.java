@@ -1,4 +1,4 @@
-package com.urise.webapp.config;
+package com.urise.webapp;
 
 import java.io.File;
 import java.io.FileInputStream;

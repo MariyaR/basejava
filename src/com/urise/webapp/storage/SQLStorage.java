@@ -187,20 +187,21 @@ public class SQLStorage implements Storage {
     private void insertPlaintText(Resume r, Connection conn) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO plain_text (plain_value, plain_resume_uuid, plain_type) VALUES (?,?,?)")) {
             for (Map.Entry<SectionName, SectionBasic> e : r.getSections().entrySet()) {
-                if (e.getValue() instanceof PlainText) {
-                    ps.setString(1, ((PlainText) e.getValue()).getField());
-                    ps.setString(2, r.getUuid());
-                    ps.setString(3, e.getKey().name());
-                    ps.addBatch();
+
+                switch (e.getKey()) {
+                    case Personal:
+                    case CurrentPosition:
+                        ps.setString(1, ((PlainText) e.getValue()).getField());
+                        break;
+                    case Skills:
+                    case Achievements:
+                        ListOfStrings lOfS = (ListOfStrings) e.getValue();
+                        ps.setString(1, String.join("\n", lOfS.getList()));
+                        break;
                 }
-                if (e.getValue() instanceof ListOfStrings) {
-                    ListOfStrings lOfS = (ListOfStrings) e.getValue();
-                    String listOfString = lOfS.getList().stream().collect(Collectors.joining("\n"));
-                    ps.setString(1, listOfString);
-                    ps.setString(2, r.getUuid());
-                    ps.setString(3, e.getKey().name());
-                    ps.addBatch();
-                }
+                ps.setString(2, r.getUuid());
+                ps.setString(3, e.getKey().name());
+                ps.addBatch();
             }
             ps.executeBatch();
         }
