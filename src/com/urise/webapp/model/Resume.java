@@ -55,8 +55,21 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.contacts = contacts;
     }
 
+    public String getContact(ContactName name) {
+        return contacts.get(name);
+    }
+
     public Map<SectionName, SectionBasic> getSections() {
         return sections;
+    }
+
+    public String getSection(SectionName name) {
+
+        return sections.get(name)!=null ? sections.get(name).toString() : "";
+    }
+
+    public SectionBasic getSectionByName (SectionName name) {
+        return sections.get(name);
     }
 
     public void setSections(EnumMap<SectionName, SectionBasic> sections) {

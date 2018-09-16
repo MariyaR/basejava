@@ -3,6 +3,7 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.*;
 import com.urise.webapp.sql.SQLHelper;
+import com.urise.webapp.util.JsonParser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -150,26 +151,36 @@ public class SQLStorage implements Storage {
 
     private void addPlainText(ResultSet rs, Resume r) throws SQLException {
         String value = rs.getString("plain_value");
-        String type = rs.getString("plain_type");
-        if (value != null && type != null) {
-            SectionName name = SectionName.valueOf(type);
-            switch (name) {
-                case Personal:
-                case CurrentPosition: {
-                    PlainText section = new PlainText(value);
-                    r.addSection(name, section);
-                }
-                break;
-                case Skills:
-                case Achievements: {
-                    ListOfStrings section = new ListOfStrings();
-                    Arrays.stream(value.split("\n")).forEach(s -> section.addRecord(s));
-                    r.addSection(name, section);
-                }
-                break;
-
-            }
+        if (value != null) {
+            SectionName sectionName = SectionName.valueOf(rs.getString("plain_type"));
+            r.addSection(sectionName, JsonParser.read(value, SectionBasic.class));
         }
+
+
+
+
+
+//        String value = rs.getString("plain_value");
+//        String type = rs.getString("plain_type");
+//        if (value != null && type != null) {
+//            SectionName name = SectionName.valueOf(type);
+//            switch (name) {
+//                case Personal:
+//                case CurrentPosition: {
+//                    PlainText section = new PlainText(value);
+//                    r.addSection(name, section);
+//                }
+//                break;
+//                case Skills:
+//                case Achievements: {
+//                    ListOfStrings section = new ListOfStrings();
+//                    Arrays.stream(value.split("\n")).forEach(s -> section.addRecord(s));
+//                    r.addSection(name, section);
+//                }
+//                break;
+//
+//            }
+//        }
     }
 
     private void insertContacts(Resume r, Connection conn) throws SQLException {
@@ -188,17 +199,18 @@ public class SQLStorage implements Storage {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO plain_text (plain_value, plain_resume_uuid, plain_type) VALUES (?,?,?)")) {
             for (Map.Entry<SectionName, SectionBasic> e : r.getSections().entrySet()) {
 
-                switch (e.getKey()) {
-                    case Personal:
-                    case CurrentPosition:
-                        ps.setString(1, ((PlainText) e.getValue()).getField());
-                        break;
-                    case Skills:
-                    case Achievements:
-                        ListOfStrings lOfS = (ListOfStrings) e.getValue();
-                        ps.setString(1, String.join("\n", lOfS.getList()));
-                        break;
-                }
+//                switch (e.getKey()) {
+//                    case Personal:
+//                    case CurrentPosition:
+//                        ps.setString(1, ((PlainText) e.getValue()).getField());
+//                        break;
+//                    case Skills:
+//                    case Achievements:
+//                        ListOfStrings lOfS = (ListOfStrings) e.getValue();
+//                        ps.setString(1, String.join("\n", lOfS.getList()));
+//                        break;
+//                }
+                ps.setString(1, JsonParser.write(e.getValue(), SectionBasic.class));
                 ps.setString(2, r.getUuid());
                 ps.setString(3, e.getKey().name());
                 ps.addBatch();

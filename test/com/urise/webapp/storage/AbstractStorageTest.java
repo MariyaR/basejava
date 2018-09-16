@@ -47,24 +47,24 @@ public abstract class AbstractStorageTest {
         skills.addRecord("c++");
         skills.addRecord("hadoop");
 
-//        Organization.DateAndText job1 = new Organization.DateAndText("position1", LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
-//        Organization.DateAndText job2 = new Organization.DateAndText( "position2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
-//        Organization.DateAndText job3 = new Organization.DateAndText( "position3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
-//        Organization.DateAndText job4 = new Organization.DateAndText( "position4", LocalDate.parse("2015-01-01"), LocalDate.parse("2017-01-01"), "some other responsibilities");
-//
-//        Organization org1 = new Organization("employer1", job1);
-//        org1.setHomePage(new Link ("name", "url1"));
-//        Organization org2 = new Organization("employer2", job2);
-//        org2.setHomePage(new Link("name","url2"));
-//        Organization org3 = new Organization("employer3", Arrays.asList(job3, job4));
-//        org3.setHomePage(new Link("name", "url3"));
-//        Organizations workingExperience = new Organizations(Arrays.asList(org1,org2,org3));
-//
+        Organization.DateAndText job1 = new Organization.DateAndText("position1", LocalDate.parse("2000-01-01"), LocalDate.parse("2005-01-01"), "some responsibilities");
+        Organization.DateAndText job2 = new Organization.DateAndText( "position2", LocalDate.parse("2005-01-01"), LocalDate.parse("2010-01-01"), "some responsibilities");
+        Organization.DateAndText job3 = new Organization.DateAndText( "position3", LocalDate.parse("2010-01-01"), LocalDate.parse("2015-01-01"), "some responsibilities");
+        Organization.DateAndText job4 = new Organization.DateAndText( "position4", LocalDate.parse("2015-01-01"), LocalDate.parse("2017-01-01"), "some other responsibilities");
+
+        Organization org1 = new Organization("employer1", job1);
+        org1.setHomePage(new Link ("name", "url1"));
+        Organization org2 = new Organization("employer2", job2);
+        org2.setHomePage(new Link("name","url2"));
+        Organization org3 = new Organization("employer3", Arrays.asList(job3, job4));
+        org3.setHomePage(new Link("name", "url3"));
+        Organizations workingExperience = new Organizations(Arrays.asList(org1,org2,org3));
+
         EnumMap<SectionName, SectionBasic> sections = new EnumMap<SectionName, SectionBasic>(SectionName.class);
         sections.put(SectionName.Personal, personal);
         sections.put(SectionName.CurrentPosition, currentPosition);
         sections.put(SectionName.Skills, skills);
-//        sections.put(SectionName.Experience, workingExperience);
+        sections.put(SectionName.Experience, workingExperience);
         RESUME_2.setSections(sections);
     }
 
