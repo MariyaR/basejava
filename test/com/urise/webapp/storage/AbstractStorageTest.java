@@ -4,6 +4,7 @@ import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.*;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,8 +65,12 @@ public abstract class AbstractStorageTest {
         sections.put(SectionName.Personal, personal);
         sections.put(SectionName.CurrentPosition, currentPosition);
         sections.put(SectionName.Skills, skills);
+        sections.put(SectionName.Achievements, skills);
         sections.put(SectionName.Experience, workingExperience);
+        sections.put(SectionName.Education, workingExperience);
         RESUME_2.setSections(sections);
+        RESUME_1.setSections(sections);
+        RESUME_3.setSections(sections);
     }
 
 

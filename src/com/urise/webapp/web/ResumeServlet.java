@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,9 +52,14 @@ public class ResumeServlet extends HttpServlet {
                     break;
                     case Skills:
                     case Achievements: {
-                        ListOfStrings section = new ListOfStrings();
-                        Arrays.stream(value.split(", ")).forEach(section::addRecord);
-                        r.addSection(sectionName, section);
+                        //ListOfStrings section = new ListOfStrings();
+                        //Arrays.stream(value.split("\n")).forEach(section::addRecord);
+                        r.addSection(sectionName, new ListOfStrings(value.split("\\n")));
+                    }
+                    break;
+                    case Education:
+                    case Experience: {
+
                     }
                     break;
                 }
@@ -90,9 +96,24 @@ public class ResumeServlet extends HttpServlet {
                 response.sendRedirect("resume");
                 return;
             case "view":
-            case "edit":
                 r = storage.get(uuid);
                 break;
+            case "edit":
+                r = storage.get(uuid);
+                for (SectionName name : new SectionName[]{Experience, Education}) {
+                    Organizations section = (Organizations) r.getSectionByName(name);
+                    List<Organization> emptyFirstOrganizations = new ArrayList<>();
+                    emptyFirstOrganizations.add(Organization.EMPTY);
+                    if (section != null) {
+                        for (Organization org : section.getOrganizations()) {
+                            List<Organization.DateAndText> emptyFirstPositions = new ArrayList<>();
+                            emptyFirstPositions.add(Organization.DateAndText.EMPTY);
+                            emptyFirstPositions.addAll(org.getPeriods());
+                            emptyFirstOrganizations.add(new Organization("", emptyFirstPositions, org.getHomePage()));
+                        }
+                    }
+                    r.addSection(name, new Organizations(emptyFirstOrganizations));
+                }
             case "add":
                 r = new Resume();
                 break;

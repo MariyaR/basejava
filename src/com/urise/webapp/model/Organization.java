@@ -27,6 +27,8 @@ public class Organization implements Serializable {
     private String title;
     private List<DateAndText> periods = new ArrayList<>();
 
+    public static final Organization EMPTY = new Organization("", DateAndText.EMPTY);
+
     public Organization() {
     }
 
@@ -117,6 +119,8 @@ public class Organization implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate endDate;
         private String responsibilities;
+
+        public static final DateAndText EMPTY = new DateAndText();
 
         public DateAndText() {
         }
