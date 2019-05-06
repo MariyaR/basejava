@@ -31,6 +31,7 @@
         <h3>Секции:</h3>
         <c:forEach var="type" items="<%=SectionName.values()%>">
             <c:set var="section" value="${resume.getSectionByName(type)}"/>
+            <jsp:useBean id="section" type="com.urise.webapp.model.SectionBasic"/>
 
             <dl>
 
@@ -42,7 +43,6 @@
                     </c:when>
 
                     <c:when test="${type=='Achievements' || type=='Skills'}">
-                        <jsp:useBean id="section" type="com.urise.webapp.model.SectionBasic"/>
                         <%--<jsp:useBean id="section" type="com.urise.webapp.model.SectionBasic"/>
                         <c:choose>
                             <c:when test="${section!=null}"> --%>
