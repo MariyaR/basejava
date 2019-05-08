@@ -51,6 +51,11 @@ public class Organization implements Serializable {
         this.homePage = homePage;
     }
 
+    public Organization(Link homePage, List<DateAndText> periods) {
+        this.homePage = homePage;
+        this.periods = periods;
+    }
+
     public void setPeriods(List<DateAndText> periods) {
         this.periods = periods;
     }

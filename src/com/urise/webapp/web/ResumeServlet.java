@@ -3,6 +3,8 @@ package com.urise.webapp.web;
 import com.urise.webapp.Config;
 import com.urise.webapp.model.*;
 import com.urise.webapp.storage.SQLStorage;
+import com.urise.webapp.util.DateUtil;
+import com.urise.webapp.util.HtmlUtil;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -29,8 +31,16 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume r = storage.get(uuid);
-        r.setFullName(fullName);
+
+        final boolean isCreate = (uuid == null || uuid.length() == 0);
+        Resume r;
+        if (isCreate) {
+            r = new Resume(fullName);
+        } else {
+            r = storage.get(uuid);
+            r.setFullName(fullName);
+        }
+
         for (ContactName contactName : ContactName.values()) {
             String value = request.getParameter(contactName.name());
             if (value != null && value.trim().length() != 0) {
@@ -72,7 +82,7 @@ public class ResumeServlet extends HttpServlet {
                                 String[] descriptions = request.getParameterValues(pfx + "description");
                                 for (int j = 0; j < titles.length; j++) {
                                     if (!HtmlUtil.isEmpty(titles[j])) {
-                                        positions.add(new Organization.DateAndText(DateUtil.parse(startDates[j]), DateUtil.parse(endDates[j]), titles[j], descriptions[j]));
+                                        positions.add(new Organization.DateAndText(titles[j], DateUtil.parse(startDates[j]), DateUtil.parse(endDates[j]), descriptions[j]));
                                     }
                                 }
                                 orgs.add(new Organization(new Link(name, urls[i]), positions));
@@ -85,15 +95,15 @@ public class ResumeServlet extends HttpServlet {
                 r.getSections().remove(sectionName);
             }
         }
-        storage.update(r);
+        if (isCreate) {
+            storage.save(r);
+        } else {
+            storage.update(r);
+        }
         response.sendRedirect("resume");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-//        request.setCharacterEncoding("UTF-8");
-//        response.setCharacterEncoding("UTF-8");
-//        response.setContentType("text/html; charset=UTF-8");
-//        String uuid = request.getParameter("uuid");
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -118,23 +128,42 @@ public class ResumeServlet extends HttpServlet {
                 break;
             case "edit":
                 r = storage.get(uuid);
-                for (SectionName name : new SectionName[]{Experience, Education}) {
-                    Organizations section = (Organizations) r.getSectionByName(name);
-                    List<Organization> emptyFirstOrganizations = new ArrayList<>();
-                    emptyFirstOrganizations.add(Organization.EMPTY);
-                    if (section != null) {
-                        for (Organization org : section.getOrganizations()) {
-                            List<Organization.DateAndText> emptyFirstPositions = new ArrayList<>();
-                            emptyFirstPositions.add(Organization.DateAndText.EMPTY);
-                            emptyFirstPositions.addAll(org.getPeriods());
-                            emptyFirstOrganizations.add(new Organization("", emptyFirstPositions, org.getHomePage()));
-                        }
+                for (SectionName name : SectionName.values()) {
+                    SectionBasic section = r.getSectionByName(name);
+                    switch (name) {
+                        case Personal:
+                        case CurrentPosition:
+                            if (section == null) {
+                                section = PlainText.EMPTY;
+                            }
+                            break;
+                        case Skills:
+                        case Achievements:
+                            if (section == null) {
+                                section = ListOfStrings.EMPTY;
+                            }
+                            break;
+                        case Experience:
+                        case Education:
+                            Organizations orgSection = (Organizations) section;
+                            List<Organization> emptyFirstOrganizations = new ArrayList<>();
+                            emptyFirstOrganizations.add(Organization.EMPTY);
+                            if (section != null) {
+                                for (Organization org : orgSection.getOrganizations()) {
+                                    List<Organization.DateAndText> emptyFirstPositions = new ArrayList<>();
+                                    emptyFirstPositions.add(Organization.DateAndText.EMPTY);
+                                    emptyFirstPositions.addAll(org.getPeriods());
+                                    emptyFirstOrganizations.add(new Organization("", emptyFirstPositions, org.getHomePage()));
+                                }
+                            }
+                            section = new Organizations(emptyFirstOrganizations);
+                            break;
                     }
-                    r.addSection(name, new Organizations(emptyFirstOrganizations));
+                    r.addSection(name, section);
                 }
-                break;
+            break;
             case "add":
-                r = new Resume();
+                r = Resume.EMPTY;
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");

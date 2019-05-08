@@ -12,6 +12,8 @@ import java.util.Objects;
 public class ListOfStrings extends SectionBasic {
     private static final long serialVersionUID = 1L;
 
+    public static final ListOfStrings EMPTY = new ListOfStrings("");
+
     private List<String> list = new ArrayList<>();
 
     public ListOfStrings () {}

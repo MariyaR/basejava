@@ -9,6 +9,8 @@ import java.util.Objects;
 public class PlainText extends SectionBasic {
     private static final long serialVersionUID = 1L;
 
+    public static final PlainText EMPTY = new PlainText("");
+
     private String Field;
 
     public PlainText() {

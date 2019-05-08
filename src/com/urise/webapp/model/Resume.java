@@ -16,6 +16,18 @@ import java.util.stream.Stream;
 public class Resume implements Comparable<Resume>, Serializable {
     private static final long serialVersionUID = 1L;
 
+
+    public static final Resume EMPTY = new Resume();
+
+    static {
+        EMPTY.addSection(SectionName.CurrentPosition, PlainText.EMPTY);
+        EMPTY.addSection(SectionName.Personal, PlainText.EMPTY);
+        EMPTY.addSection(SectionName.Achievements, ListOfStrings.EMPTY);
+        EMPTY.addSection(SectionName.Skills, ListOfStrings.EMPTY);
+        EMPTY.addSection(SectionName.Experience, new Organizations(Organization.EMPTY));
+        EMPTY.addSection(SectionName.Education, new Organizations(Organization.EMPTY));
+    }
+
     private String uuid;
     private String fullName;
     private Map<ContactName, String> contacts = new EnumMap<ContactName, String>(ContactName.class);
