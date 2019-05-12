@@ -3,6 +3,7 @@ package com.urise.webapp.web;
 import com.urise.webapp.Config;
 import com.urise.webapp.model.*;
 import com.urise.webapp.storage.SQLStorage;
+import com.urise.webapp.storage.Storage;
 import com.urise.webapp.util.DateUtil;
 import com.urise.webapp.util.HtmlUtil;
 
@@ -20,11 +21,11 @@ import java.util.List;
 import static com.urise.webapp.model.SectionName.*;
 
 public class ResumeServlet extends HttpServlet {
-    static SQLStorage storage;
+    static Storage storage;
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        storage = new SQLStorage(Config.get().getProps().getProperty("db.url"), Config.get().getProps().getProperty("db.user"), Config.get().getProps().getProperty("db.password"));
+        storage = Config.get().getStorage();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
